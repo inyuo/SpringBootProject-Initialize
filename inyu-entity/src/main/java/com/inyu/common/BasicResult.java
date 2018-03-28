@@ -34,7 +34,7 @@ public class BasicResult<T> implements Serializable {
         this.setData(data);
         return this;
     }
-    public BasicResult status(int status){
+    public  BasicResult status(int status){
         this.setStatus(status);
         return this;
     }
