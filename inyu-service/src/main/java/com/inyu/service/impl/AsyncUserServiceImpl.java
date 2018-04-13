@@ -2,9 +2,14 @@ package com.inyu.service.impl;
 
 import com.inyu.entity.Crm_User;
 import com.inyu.repo.UserRepository;
-import com.inyu.service.UserService;
+import com.inyu.service.AsyncUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 
@@ -13,7 +18,11 @@ import java.util.List;
  * Created by jinyu on 2018/3/21/021.
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class AsyncUserServiceImpl implements AsyncUserService {
+
+    private Logger logger= LoggerFactory.getLogger(AsyncUserServiceImpl.class);
+
+    private TransactionTemplate transactionTemplate;
 
     @Autowired
     UserRepository userRepository;
@@ -43,8 +52,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Crm_User getUserInfo(String uid) {
-        return userRepository.findOne(uid);
+    public Crm_User getUserInfo(Long uid) {
+        return userRepository.findOne(uid+"");
     }
 
     /**
@@ -59,7 +68,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Crm_User addUser(Crm_User addUser) {
-        Crm_User save = userRepository.save(addUser);
-        return save;
+
+        return transactionTemplate.execute(new TransactionCallback<Crm_User>() {
+            @Override
+            public Crm_User doInTransaction(TransactionStatus transactionStatus) {
+                Crm_User save = userRepository.save(addUser);
+                return save;
+            }
+        });
     }
 }

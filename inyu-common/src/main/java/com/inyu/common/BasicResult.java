@@ -16,6 +16,9 @@ public class BasicResult<T> implements Serializable {
     private int status = OK; //状态码
     private String msg = ""; //描述信息
 
+
+    public BasicResult() {
+    }
     //APIS
     public static BasicResult isOk(){
         return new BasicResult();
@@ -39,8 +42,7 @@ public class BasicResult<T> implements Serializable {
         return this;
     }
 
-    public BasicResult() {
-    }
+
 
     public T getData() {
         return data;
