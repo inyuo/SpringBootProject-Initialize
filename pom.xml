@@ -110,6 +110,22 @@
 			<version>2.2.1</version>
 		</dependency>
 		<!-- log conf end -->
+
+		<!-- 热部署 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+			<scope>true</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -117,6 +133,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<!--fork :  如果没有该项配置，肯定devtools不会起作用，即应用不会restart -->
+					<fork>true</fork>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

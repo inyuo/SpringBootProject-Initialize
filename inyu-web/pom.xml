@@ -50,6 +50,13 @@
             <artifactId>inyu-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+
 
     </dependencies>
 </project>

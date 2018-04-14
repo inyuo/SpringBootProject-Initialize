@@ -12,4 +12,8 @@ public interface AsyncQuartzConfService {
     List<Quartz_Config> getJobList();
 
     Quartz_Config findById(long id);
+
+    int updateJob(long id,String cron,String msg);
+
+     int updateJobStatus(long id,int status);
 }
