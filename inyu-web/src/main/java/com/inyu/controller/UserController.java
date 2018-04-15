@@ -1,6 +1,7 @@
 package com.inyu.controller;
 
 import com.inyu.common.BasicResult;
+import com.inyu.common.DateUtil;
 import com.inyu.entity.Crm_User;
 import com.inyu.service.AsyncUserService;
 import io.swagger.annotations.Api;
@@ -15,6 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 
 /**
  * Created by Administrator on 2018/3/20/020.
@@ -99,29 +101,36 @@ public class UserController {
     }
 
     @ApiOperation("添加用户")
-    @PostMapping("addUser")
-    public BasicResult addUser(@ApiParam("用户名：username")@RequestParam(value = "username",required = true)String username,
-                             @ApiParam("密码：password")@RequestParam(value = "password",required = true)String password,
-                             HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping("add")
+    public BasicResult addUser(@ApiParam("User Model：addUser")@RequestBody Crm_User addUser,HttpServletResponse response) {
         try {
-            Crm_User addUser = new Crm_User();
-            addUser.setName(username);
-            addUser.setPassword(password);
             Crm_User userValidate = asyncUserService.validate(addUser);
             if (userValidate!=null){
-                logger.error("添加用户失败！");
+                logger.error("添加用户失败！用户名已被占用！");
                 return BasicResult.isFail().msg(new Throwable("用户名已被占用！"));
             }
             Crm_User userInfo = asyncUserService.addUser(addUser);
-            HttpSession session = request.getSession();
-            session.setAttribute("userInfo",userInfo);
-            Cookie uidCookie = new Cookie("uid",userInfo.getUser_Id()+"");
-            uidCookie.setMaxAge(60 * 60 * 24);
-            response.addCookie(uidCookie);
+            response.setContentType("application/json;charset=utf-8");
             return BasicResult.isOk().data(userInfo);
         } catch (Exception e) {
             logger.error("添加用户失败！",e);
             return BasicResult.isFail(e);
         }
+    }
+
+
+    @ApiOperation("删除用户")
+    @PostMapping("remove")
+    public BasicResult removeUser(@ApiParam("用户id：userId")@RequestParam long userId) {
+        try {
+            boolean bool = asyncUserService.delUserById(userId);
+            if (!bool){
+                return BasicResult.isFail();
+            }
+        } catch (Exception e) {
+            logger.error("添加用户失败！",e);
+            return BasicResult.isFail(e);
+        }
+        return BasicResult.isOk();
     }
 }

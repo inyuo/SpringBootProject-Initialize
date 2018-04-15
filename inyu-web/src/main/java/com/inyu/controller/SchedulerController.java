@@ -42,7 +42,7 @@ public class SchedulerController {
     MySchedulerFactory mySchedulerFactory;
 
     @ApiOperation("获取所有任务")
-    @PostMapping("list")
+    @GetMapping("list")
     public BasicResult list(@ApiParam("当前页：queryObj") @RequestParam(value = "queryObj", required = false) String queryObj,
                             @ApiParam("当前页：currentPage") @RequestParam(value = "currentPage", required = true) String currentPage,
                             @ApiParam("每页多少条：pageSize") @RequestParam(value = "pageSize", required = true) String pageSize) {

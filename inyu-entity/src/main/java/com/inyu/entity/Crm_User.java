@@ -7,7 +7,8 @@ import javax.persistence.*;
 public class Crm_User {
 
  @Id
- @Column(name = "user_id")
+ @GeneratedValue
+ @Column(name = "user_id",unique = true)
   private long user_Id;
  @Column(name = "role_id")
   private long role_Id;

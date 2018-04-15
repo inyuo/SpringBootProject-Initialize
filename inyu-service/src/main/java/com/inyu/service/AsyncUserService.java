@@ -14,4 +14,5 @@ public interface AsyncUserService {
     Crm_User validate(Crm_User user);
 
     Crm_User addUser(Crm_User addUser);
+    boolean delUserById(long userId);
 }
