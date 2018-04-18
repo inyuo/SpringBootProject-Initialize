@@ -12,7 +12,8 @@
 		<module>inyu-service</module>
 		<module>inyu-web</module>
 		<module>inyu-common</module>
-	</modules>
+        <module>inyu-webmagic</module>
+    </modules>
 	<packaging>pom</packaging>
 
 	<name>jingo</name>
