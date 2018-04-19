@@ -69,15 +69,15 @@ public class AsyncUserServiceImpl implements AsyncUserService {
     @Override
     public Crm_User addUser(Crm_User addUser) {
 
-        Crm_User save = userRepository.save(addUser);
-        return save;
-//        return transactionTemplate.execute(new TransactionCallback<Crm_User>() {
-//            @Override
-//            public Crm_User doInTransaction(TransactionStatus transactionStatus) {
-//                Crm_User save = userRepository.save(addUser);
-//                return save;
-//            }
-//        });
+//        Crm_User save = userRepository.save(addUser);
+//        return save;
+        return transactionTemplate.execute(new TransactionCallback<Crm_User>() {
+            @Override
+            public Crm_User doInTransaction(TransactionStatus transactionStatus) {
+                Crm_User save = userRepository.save(addUser);
+                return save;
+            }
+        });
     }
 
     public boolean delUserById(long userId) {
