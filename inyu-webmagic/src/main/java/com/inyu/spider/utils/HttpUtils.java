@@ -1,7 +1,9 @@
 package com.inyu.spider.utils;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -15,11 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author 高远</n>
- * 编写日期   2016-10-5下午5:13:37</n>
- * 邮箱  wgyscsf@163.com</n>
- * 博客  http://blog.csdn.net/wgyscsf</n>
- * TODO</n>
+ *
  */
 public class HttpUtils {
 
@@ -31,11 +29,16 @@ public class HttpUtils {
 
 	}
 
-	public static String sendGet(String url) {
+	public static String sendGet(String url,Header header) {
 		CloseableHttpResponse response = null;
 		String content = null;
 		try {
 			HttpGet get = new HttpGet(url);
+			// nvps是包装请求参数的list
+			if (header != null) {
+
+				get.setHeader(header);
+			}
 			response = httpClient.execute(get, context);
 			HttpEntity entity = response.getEntity();
 			content = EntityUtils.toString(entity);

@@ -2,7 +2,6 @@ package com.inyu.controller;
 
 import com.inyu.common.BasicResult;
 import com.inyu.service.AsyncCustomerService;
-import com.inyu.service.AsyncQuartzConfService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
