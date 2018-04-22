@@ -12,6 +12,6 @@ public interface AsyncCustomerService {
     List<Crm_Customer> getCustomerList();
     Crm_Customer getCustomerInfo(int id);
 
-    Crm_Customer addCustomer(Crm_Customer addUser);
-    boolean delCustomerById(long userId);
+    Crm_Customer addCustomer(Crm_Customer customer);
+    boolean delCustomerById(int userId);
 }

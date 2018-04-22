@@ -17,8 +17,24 @@ public class Crm_Customer {
   private long contacts_Id;
  @Column(name = "name")
   private String name;
+ @Column(name = "email")
+  private String email;
  @Column(name = "origin")
   private String origin;
+ @Column(name = "licenc_no")
+  private String licenc_No;
+ @Column(name = "website")
+  private String website;
+ @Column(name = "telephone")
+  private String telephone;
+ @Column(name = "landline_telephone")
+  private String landline_Telephone;
+ @Column(name = "fax")
+  private String fax;
+ @Column(name = "satisfy")
+  private long satisfy;
+ @Column(name = "level")
+  private long level;
  @Column(name = "address")
   private String address;
  @Column(name = "zip_code")
@@ -32,9 +48,9 @@ public class Crm_Customer {
  @Column(name = "rating")
   private String rating;
  @Column(name = "create_time")
-  private long create_Time;
+  private java.sql.Date create_Time;
  @Column(name = "update_time")
-  private long update_Time;
+  private java.sql.Date update_Time;
  @Column(name = "is_deleted")
   private long is_Deleted;
  @Column(name = "is_locked")
@@ -42,7 +58,7 @@ public class Crm_Customer {
  @Column(name = "delete_role_id")
   private long delete_Role_Id;
  @Column(name = "delete_time")
-  private long delete_Time;
+  private java.sql.Date delete_Time;
 
 
   public long getCustomer_Id() {
@@ -90,12 +106,84 @@ public class Crm_Customer {
   }
 
 
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+
   public String getOrigin() {
     return origin;
   }
 
   public void setOrigin(String origin) {
     this.origin = origin;
+  }
+
+
+  public String getLicenc_No() {
+    return licenc_No;
+  }
+
+  public void setLicenc_No(String licenc_No) {
+    this.licenc_No = licenc_No;
+  }
+
+
+  public String getWebsite() {
+    return website;
+  }
+
+  public void setWebsite(String website) {
+    this.website = website;
+  }
+
+
+  public String getTelephone() {
+    return telephone;
+  }
+
+  public void setTelephone(String telephone) {
+    this.telephone = telephone;
+  }
+
+
+  public String getLandline_Telephone() {
+    return landline_Telephone;
+  }
+
+  public void setLandline_Telephone(String landline_Telephone) {
+    this.landline_Telephone = landline_Telephone;
+  }
+
+
+  public String getFax() {
+    return fax;
+  }
+
+  public void setFax(String fax) {
+    this.fax = fax;
+  }
+
+
+  public long getSatisfy() {
+    return satisfy;
+  }
+
+  public void setSatisfy(long satisfy) {
+    this.satisfy = satisfy;
+  }
+
+
+  public long getLevel() {
+    return level;
+  }
+
+  public void setLevel(long level) {
+    this.level = level;
   }
 
 
@@ -153,20 +241,20 @@ public class Crm_Customer {
   }
 
 
-  public long getCreate_Time() {
+  public java.sql.Date getCreate_Time() {
     return create_Time;
   }
 
-  public void setCreate_Time(long create_Time) {
+  public void setCreate_Time(java.sql.Date create_Time) {
     this.create_Time = create_Time;
   }
 
 
-  public long getUpdate_Time() {
+  public java.sql.Date getUpdate_Time() {
     return update_Time;
   }
 
-  public void setUpdate_Time(long update_Time) {
+  public void setUpdate_Time(java.sql.Date update_Time) {
     this.update_Time = update_Time;
   }
 
@@ -198,11 +286,11 @@ public class Crm_Customer {
   }
 
 
-  public long getDelete_Time() {
+  public java.sql.Date getDelete_Time() {
     return delete_Time;
   }
 
-  public void setDelete_Time(long delete_Time) {
+  public void setDelete_Time(java.sql.Date delete_Time) {
     this.delete_Time = delete_Time;
   }
 

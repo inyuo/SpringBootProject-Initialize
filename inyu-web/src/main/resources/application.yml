@@ -4,23 +4,28 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-          max-active: 20
-          initial-size: 1
-          min-idle: 3
-          max-wait: 60000
-          time-between-eviction-runs-millis: 60000
-          min-evictable-idle-time-millis: 300000
-          test-while-idle: true
-          test-on-borrow: false
-          test-on-return: false
-  thymeleaf:
-    prefix: classpath:/template/
-    suffix: .html
-    mode: LEGACYHTML5
-    encoding: UTF-8
-    cache: false
+  jpa:
+    show-sql: true
+    properties:
+          hibernate.format_sql: true
+
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    druid:
+#          max-active: 20
+#          initial-size: 1
+#          min-idle: 3
+#          max-wait: 60000
+#          time-between-eviction-runs-millis: 60000
+#          min-evictable-idle-time-millis: 300000
+#          test-while-idle: true
+#          test-on-borrow: false
+#          test-on-return: false
+#  thymeleaf:
+#    prefix: classpath:/template/
+#    suffix: .html
+#    mode: LEGACYHTML5
+#    encoding: UTF-8
+#    cache: false
 
 #mybatis:
 #  mapperLocations: classpath*:net/huadong/mapper/*/*.xml

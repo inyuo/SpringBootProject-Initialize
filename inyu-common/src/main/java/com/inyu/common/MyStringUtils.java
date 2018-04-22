@@ -1,4 +1,4 @@
-package com.inyu.spider.utils;
+package com.inyu.common;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * @author 高远</n>
  * 编写日期   2016-9-24下午9:39:37</n>
- * 邮箱  wgyscsf@163.com</n>
+ * 邮箱  wgyscsf@163.com</n>w
  * 博客  http://blog.csdn.net/wgyscsf</n>
  * TODO</n>
  */

@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface CustomerRepository extends JpaRepository<Crm_Customer,Integer> {
 
-    @Query(value = "select * from crm_user  where name= ?1 and password = ?2",nativeQuery =true)
-    Crm_Customer login(String name, String password);
+//    @Query(value = "select * from crm_user  where name= ?1 and password = ?2",nativeQuery =true)
+//    Crm_Customer login(String name, String password);
 
 }
