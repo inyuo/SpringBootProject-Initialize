@@ -11,6 +11,7 @@ import java.util.List;
 public interface AsyncCustomerService {
     List<Crm_Customer> getCustomerList();
     Crm_Customer getCustomerInfo(int id);
+    Crm_Customer getCustomerInfoByName(String name);
 
     Crm_Customer addCustomer(Crm_Customer customer);
     boolean delCustomerById(int userId);

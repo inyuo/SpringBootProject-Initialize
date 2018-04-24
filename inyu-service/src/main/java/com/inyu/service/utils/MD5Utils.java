@@ -1,4 +1,4 @@
-package com.inyu.utils;
+package com.inyu.service.utils;
 
 import io.swagger.annotations.Api;
 

@@ -3,6 +3,7 @@ package com.inyu.controller;
 
 import com.inyu.common.BasicResult;
 import com.inyu.service.AsyncSpliderService;
+import com.inyu.service.thread.MySpliderThread;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Api(value = "爬虫信息", description = "爬虫信息管理")
 @RestController
 @CrossOrigin
@@ -20,20 +24,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class SpliderController {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
+    ExecutorService pool = Executors.newFixedThreadPool(5);
 
-    @Autowired
-    private AsyncSpliderService asyncSpliderService;
-    private static long baseCounter =4l;
+
+    private static int counter = 20;
 
     @ApiOperation("开启")
     @PostMapping(value = "start")
     public BasicResult startSplider() {
         try {
-            while (baseCounter!=999) {
-                final String baseUrl = "https://www.11467.com/guangzhou/co/"+baseCounter+".htm";
-                boolean pageInfo = asyncSpliderService.getPageInfo(baseUrl, "");
-                baseCounter++;
-                Thread.sleep(500);
+            //创建固定大小的线程池
+            ExecutorService exec = Executors.newFixedThreadPool(5);
+            while (counter<1000){
+                synchronized (this) {
+                    exec.execute(new MySpliderThread());
+                    Thread.sleep(1000);
+                    counter++;
+                }
+                exec.shutdown();
             }
             return BasicResult.isOk();
         } catch (Exception e) {

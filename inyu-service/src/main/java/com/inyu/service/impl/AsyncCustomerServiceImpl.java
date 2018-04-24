@@ -44,6 +44,11 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
     }
 
     @Override
+    public Crm_Customer getCustomerInfoByName(String name) {
+        return customerRepository.getCustomerInfoByName(name);
+    }
+
+    @Override
     public Crm_Customer addCustomer(Crm_Customer customer) {
        Crm_Customer crm_customer = checkCustomer(customer);
         return customerRepository.save(customer);
