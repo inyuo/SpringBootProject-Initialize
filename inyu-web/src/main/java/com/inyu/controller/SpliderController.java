@@ -2,6 +2,8 @@ package com.inyu.controller;
 
 
 import com.inyu.common.BasicResult;
+import com.inyu.service.AsyncCrmConfService;
+import com.inyu.service.AsyncCustomerService;
 import com.inyu.service.AsyncSpliderService;
 import com.inyu.service.thread.MySpliderThread;
 import io.swagger.annotations.Api;
@@ -26,7 +28,10 @@ public class SpliderController {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     ExecutorService pool = Executors.newFixedThreadPool(5);
 
-
+    @Autowired
+    private AsyncSpliderService asyncSpliderService;
+//    @Autowired
+//    private AsyncCustomerService asyncCustomerService;
     private static int counter = 20;
 
     @ApiOperation("开启")
@@ -37,7 +42,8 @@ public class SpliderController {
             ExecutorService exec = Executors.newFixedThreadPool(5);
             while (counter<1000){
                 synchronized (this) {
-                    exec.execute(new MySpliderThread());
+//                    exec.execute(new MySpliderThread());
+                    asyncSpliderService.getPageInfo("","");
                     Thread.sleep(1000);
                     counter++;
                 }

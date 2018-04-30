@@ -81,7 +81,7 @@ public class AsyncSpliderServiceImpl implements AsyncSpliderService {
                         }
                     }
                     //查询是否已存在
-                    Crm_Customer infoByName = asyncCustomerService.getCustomerInfoByName(customer.getName());
+                    Crm_Customer infoByName = asyncCustomerService.getCustomerInfoByIndustry(customer.getIndustry());
                     if (infoByName !=null){
                         logger.error("splider-save-customer--> error : info is exist{ "+customer);
                         return false;

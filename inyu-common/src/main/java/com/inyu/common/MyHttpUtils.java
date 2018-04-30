@@ -58,7 +58,7 @@ public class MyHttpUtils {
             RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
 
             HttpGet get = new HttpGet(url);
-            get.setConfig(config);
+//            get.setConfig(config);
             // nvps是包装请求参数的list
             if (header != null) {
                 get.setHeader(header);

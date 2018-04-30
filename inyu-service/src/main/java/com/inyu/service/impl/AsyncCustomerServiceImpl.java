@@ -44,8 +44,8 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
     }
 
     @Override
-    public Crm_Customer getCustomerInfoByName(String name) {
-        return customerRepository.getCustomerInfoByName(name);
+    public Crm_Customer getCustomerInfoByIndustry(String industry) {
+        return customerRepository.getCustomerInfoByIndustry(industry);
     }
 
     @Override
