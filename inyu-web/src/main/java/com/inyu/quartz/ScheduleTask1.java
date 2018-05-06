@@ -1,17 +1,23 @@
 package com.inyu.quartz;
 
+import com.inyu.SpringContext;
 import com.inyu.common.DateUtil;
+import com.inyu.common.MyHttpUtils;
+import com.inyu.entity.Quartz_Proxy;
+import com.inyu.service.AsyncQuartzProxyService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 定时任务实现类
@@ -24,30 +30,15 @@ public class ScheduleTask1 implements Job {
 
     private static Logger logger = LoggerFactory.getLogger(ScheduleTask1.class);
 
-//    public String getTemplate(String templatename, Map<String, String> params) throws Exception {
-//        UserMsgService userMsgService = SpringContext.getBean("userMsgService", UserMsgService.class);
-//        String template = userMsgService.getTemplate(templatename);
-//        for (String key : params.keySet()) {
-//            String v = params.get(key);
-//            template = template.replace("${" + key + "}", v);
-//        }
-//        return template;
-//    }
         public void execute() throws JobExecutionException {
-//        logger.info("==== 定时任务实现类（清明节活动专场提醒）ScheduleTask ====> 开启!" + DateUtils.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
 
-//        UserService userService= SpringContext.getBean("userService",UserService.class);
-//        UserMsgService userMsgService= SpringContext.getBean("userMsgService",UserMsgService.class);
+         AsyncQuartzProxyService asyncQuartzProxyService= SpringContext.getBean("asyncQuartzProxyService",AsyncQuartzProxyService.class);
+            List<Quartz_Proxy> proxyList = asyncQuartzProxyService.getProxyList();
+            for (Quartz_Proxy quartz_proxy : proxyList) {
 
-        try {
+            }
+            try {
             System.out.println("任务执行1！");
-
-//            List<User> userList = userService.getAllUsers();
-//            String msg = getTemplate("qingmingregard", new HashMap<String, String>());
-//
-//            for (User user : userList) {
-//                userMsgService.addMsg(user.getId(), 1, 1, "【系统通知】", msg);
-//            }
 
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -56,19 +47,15 @@ public class ScheduleTask1 implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        logger.info("==== 定时任务实现类（获取&验证代理ip池）ScheduleTask ====> 开启!" + DateUtil.getNowDate());
         try {
             System.out.print("任务执行1 :");
-            System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 
-//            List<User> userList = userService.getAllUsers();
-//            String msg = getTemplate("qingmingregard", new HashMap<String, String>());
-//
-//            for (User user : userList) {
-//                userMsgService.addMsg(user.getId(), 1, 1, "【系统通知】", msg);
-//            }
-
+            System.out.println(DateUtil.getNow());
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("==== 定时任务实现类（获取&验证代理ip池）ScheduleTask ====>异常!",e.getMessage());
+        }finally {
+            logger.info("==== 定时任务实现类（获取&验证代理ip池）ScheduleTask ====> 结束!" + DateUtil.getNowDate());
         }
     }
 }

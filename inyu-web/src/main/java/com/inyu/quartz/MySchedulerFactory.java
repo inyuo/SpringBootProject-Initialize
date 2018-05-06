@@ -2,6 +2,7 @@ package com.inyu.quartz;
 
 import com.inyu.entity.Quartz_Config;
 import com.inyu.service.AsyncQuartzConfService;
+import com.inyu.service.AsyncQuartzProxyService;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

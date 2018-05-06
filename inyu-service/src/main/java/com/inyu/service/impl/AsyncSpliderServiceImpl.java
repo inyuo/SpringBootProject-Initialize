@@ -83,14 +83,14 @@ public class AsyncSpliderServiceImpl implements AsyncSpliderService {
                     //查询是否已存在
                     Crm_Customer infoByName = asyncCustomerService.getCustomerInfoByIndustry(customer.getIndustry());
                     if (infoByName !=null){
-                        logger.error("splider-save-customer--> error : info is exist{ "+customer);
+                        logger.error("splider-save-customer--> 已存在 :  exist{ "+customer);
                         return false;
                     }
                     // 存储用户
                     Crm_Customer crm_customer = asyncCustomerService.addCustomer(customer);
                     return Boolean.TRUE;
                 } catch (Exception e) {
-                    logger.error("splider-save-customer--> error", e);
+                    logger.error("splider-save-customer--> 异常:", e);
                     return Boolean.FALSE;
                 } finally {
                     int counter = Integer.parseInt(spliderCounter) + 1;
