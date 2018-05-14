@@ -42,7 +42,6 @@ public class SpliderController {
             ExecutorService exec = Executors.newFixedThreadPool(5);
             while (counter<1000){
                 synchronized (this) {
-//                    exec.execute(new MySpliderThread());
                     asyncSpliderService.getPageInfo("","");
                     Thread.sleep(1000);
                     counter++;
