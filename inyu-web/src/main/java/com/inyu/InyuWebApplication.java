@@ -26,14 +26,6 @@ import java.util.concurrent.Executor;
 public class InyuWebApplication extends SpringBootServletInitializer{
     public static LoggerIDInheritableThreadLocal loggerIDInheritableThreadLocal = new LoggerIDInheritableThreadLocal();
 
-    @Bean
-    public Executor corePool() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(10);
-        executor.setThreadNamePrefix("corePool-");
-        executor.initialize();
-        return executor;
-    }
     public static void main(String[] args) {
         SpringApplication.run(InyuWebApplication.class, args);
     }

@@ -92,7 +92,6 @@ public class SchedulerController {
     @PostMapping("resumejob")
     public BasicResult resumeJob(@ApiParam("ID：id") @RequestParam(value = "id", required = true) long id) {
         return transactionTemplate.execute(new TransactionCallback<BasicResult>() {
-
             @Override
             public BasicResult doInTransaction(TransactionStatus transactionStatus) {
                 try {

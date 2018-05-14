@@ -6,6 +6,7 @@ import com.inyu.service.AsyncQuartzProxyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2018/3/20/020.
  */
+@Service
 public class AsyncQuartzProxyServiceImpl implements AsyncQuartzProxyService {
 
     private Logger logger= LoggerFactory.getLogger(AsyncQuartzProxyServiceImpl.class);
@@ -41,4 +43,6 @@ public class AsyncQuartzProxyServiceImpl implements AsyncQuartzProxyService {
     public Quartz_Proxy saveProxy(Quartz_Proxy proxy) {
         return quarztProxyRepository.save(proxy);
     }
+
+
 }

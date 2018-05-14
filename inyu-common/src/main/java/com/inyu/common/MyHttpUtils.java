@@ -14,9 +14,11 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -50,7 +52,7 @@ public class MyHttpUtils {
 
     }
 
-    public static String sendGet(String url, Header header) {
+    public static String sendGet(String url, Map<String,String> headers) {
         CloseableHttpResponse response = null;
         String content = null;
         try {
@@ -61,8 +63,10 @@ public class MyHttpUtils {
             HttpGet get = new HttpGet(url);
 //            get.setConfig(config);
             // nvps是包装请求参数的list
-            if (header != null) {
-                get.setHeader(header);
+            if (!CollectionUtils.isEmpty(headers)) {
+                for (String key : headers.keySet()) {
+                    get.setHeader(key,headers.get(key));
+                }
             }
             response = httpClient.execute(get, context);
             HttpEntity entity = response.getEntity();

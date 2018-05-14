@@ -16,7 +16,8 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 public class StartSchedulerListener implements ApplicationListener<ContextRefreshedEvent> {
     @Autowired
     public MySchedulerFactory mySchedulerFactory;
-
+    @Autowired
+    private MyJobFactory myJobFactory;
     // springboot 启动监听
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -31,6 +32,7 @@ public class StartSchedulerListener implements ApplicationListener<ContextRefres
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean() {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
+        schedulerFactoryBean.setJobFactory(myJobFactory);
         return schedulerFactoryBean;
     }
 
