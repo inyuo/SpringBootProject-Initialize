@@ -74,9 +74,9 @@ public class ScheduleTask1 implements Job, Serializable {
                 proxy.setType(selects.get(3).ownText());
                 proxy.setLocation(selects.get(4).ownText());
                 String time = selects.get(5).ownText().replace("秒", "");
-                proxy.setSpread(Integer.parseInt(time));
+                proxy.setSpread(Float.parseFloat(time));
                 proxy.setStatus(0l);//默认可用
-                proxy.setLast_Validate((java.sql.Date) DateUtil.getNowDate());
+                proxy.setLast_Validate(DateUtil.getSqlDateShort());
                 //该记录已存在 & 更新
                 asyncQuartzProxyService.saveProxy(proxy);
             }

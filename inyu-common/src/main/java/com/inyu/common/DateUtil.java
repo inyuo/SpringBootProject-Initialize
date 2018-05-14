@@ -83,6 +83,9 @@ public  class DateUtil {
         String dateString = formatter.format(new Date());
         return dateString;
     }
+    public static java.sql.Date getSqlDateShort() {
+        return new java.sql.Date(System.currentTimeMillis());
+    }
 
     /**
      * 获取时间 小时:分;秒 HH:mm:ss
