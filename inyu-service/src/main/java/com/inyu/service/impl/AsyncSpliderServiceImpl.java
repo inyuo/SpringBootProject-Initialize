@@ -48,7 +48,7 @@ public class AsyncSpliderServiceImpl implements AsyncSpliderService {
         Crm_Customer customer = new Crm_Customer();
         try {
             HashMap<String, String> headers = initHeaders();
-            String ret = MyHttpUtils.sendGet(baseUrl, headers);
+            String ret = MyHttpUtils.sendGet(baseUrl, headers,null);
             if (ret.indexOf("没找到") != -1) {
                 return false;
             }

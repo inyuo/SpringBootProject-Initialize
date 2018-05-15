@@ -56,7 +56,7 @@ public class ScheduleTask1 implements Job, Serializable {
             headers.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36");
 
             //获取页面
-            String proxyPage = MyHttpUtils.sendGet(kuaiProxy, headers);
+            String proxyPage = MyHttpUtils.sendGet(kuaiProxy, headers,null);
             Document parse = Jsoup.parse(proxyPage);
             Elements elements = parse.getElementsByClass("table table-bordered table-striped").select("tr");
             Quartz_Proxy proxy = null;

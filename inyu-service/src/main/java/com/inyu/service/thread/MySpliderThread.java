@@ -40,7 +40,7 @@ public class MySpliderThread implements Runnable {
                 final String baseUrl = "https://www.11467.com/guangzhou/co/" + spliderCounter + ".htm";
                 Crm_Customer customer = new Crm_Customer();
                 try {
-                    String ret = MyHttpUtils.sendGet(baseUrl, null);
+                    String ret = MyHttpUtils.sendGet(baseUrl, null,null);
                     if (ret.indexOf("没找到") != -1) {
                         return ;
                     }

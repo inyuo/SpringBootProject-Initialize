@@ -40,9 +40,12 @@ public class MyHttpUtils {
     public static String sendGet(String url, Map<String,String> headers,Quartz_Proxy quartzProxy) {
         CloseableHttpResponse response = null;
         String content = null;
+        HttpHost proxy=null;
         try {
             // 依次是代理地址，代理端口号，协议类型
-            HttpHost proxy = new HttpHost(quartzProxy.getIp(), Integer.parseInt(quartzProxy.getPort()), quartzProxy.getType());
+            if (quartzProxy!=null){
+                proxy = new HttpHost(quartzProxy.getIp(), Integer.parseInt(quartzProxy.getPort()), quartzProxy.getType());
+            }
             RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
 
             HttpGet get = new HttpGet(url);
