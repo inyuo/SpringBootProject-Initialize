@@ -15,6 +15,8 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
@@ -29,9 +31,7 @@ public class MyHttpUtils {
     public static final String TAG = "MyHttpUtils";
     public static CloseableHttpClient httpClient = HttpClients.createDefault();
     public static HttpClientContext context = new HttpClientContext();
-
-    // yuser-agent
-
+    private static Logger logger = LoggerFactory.getLogger(MyHttpUtils.class);
 
     private MyHttpUtils() {
 
@@ -62,16 +62,17 @@ public class MyHttpUtils {
             EntityUtils.consume(entity);
             return content;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("sendGet is Error :",e);
             if (response != null) {
                 try {
                     response.close();
                 } catch (IOException e1) {
-                    e1.printStackTrace();
+                    logger.error("response.close()   Error :",e1);
                 }
             }
+        }finally {
+            return content;
         }
-        return content;
     }
 
     public static BasicResult sendPost(String url, List<NameValuePair> nvps) {

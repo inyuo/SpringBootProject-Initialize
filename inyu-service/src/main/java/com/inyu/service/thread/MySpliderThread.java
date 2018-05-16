@@ -23,10 +23,6 @@ public class MySpliderThread implements Runnable {
 
     @Resource
     private static AsyncCustomerService asyncCustomerService;
-    /*static {
-          asyncCrmConfService = (AsyncCrmConfService)SpringApplicationContextHolder.getSpringBean("asyncCrmConfService");
-          asyncCustomerService=(AsyncCustomerService)SpringApplicationContextHolder.getSpringBean("asyncCustomerService");;
-    }*/
 
     @Override
     public void run() {

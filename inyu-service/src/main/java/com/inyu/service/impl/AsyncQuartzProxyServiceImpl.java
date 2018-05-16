@@ -44,5 +44,9 @@ public class AsyncQuartzProxyServiceImpl implements AsyncQuartzProxyService {
         return quarztProxyRepository.save(proxy);
     }
 
+    @Override
+    public Quartz_Proxy updateProxy(Quartz_Proxy proxy) {
+        return quarztProxyRepository.save(proxy);
+    }
 
 }

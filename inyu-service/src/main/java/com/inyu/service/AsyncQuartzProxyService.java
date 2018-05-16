@@ -19,6 +19,5 @@ public interface AsyncQuartzProxyService {
 
     Quartz_Proxy saveProxy(Quartz_Proxy proxy);
 
-//    Quartz_Proxy updateProxy(Quartz_Proxy proxy);
-
+    Quartz_Proxy updateProxy(Quartz_Proxy proxy);
 }

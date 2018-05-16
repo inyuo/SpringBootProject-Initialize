@@ -14,4 +14,5 @@ public interface QuarztProxyRepository extends JpaRepository<Quartz_Proxy,Long> 
     @Query(value = "select * from quartz_proxy where ip= ?1 ",nativeQuery =true)
     Quartz_Proxy findOneByIp(String ip);
 
+
 }
