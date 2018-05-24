@@ -132,12 +132,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<mainClass>com.inyu.InyuWebApplication</mainClass>
 					<!--fork :  如果没有该项配置，肯定devtools不会起作用，即应用不会restart -->
 					<fork>true</fork>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

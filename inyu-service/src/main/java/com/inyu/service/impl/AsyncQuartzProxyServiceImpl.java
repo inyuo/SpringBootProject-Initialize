@@ -1,6 +1,6 @@
 package com.inyu.service.impl;
 
-import com.inyu.entity.Quartz_Proxy;
+import com.inyu.entity.QuartzProxy;
 import com.inyu.repo.QuarztProxyRepository;
 import com.inyu.service.AsyncQuartzProxyService;
 import org.slf4j.Logger;
@@ -25,27 +25,27 @@ public class AsyncQuartzProxyServiceImpl implements AsyncQuartzProxyService {
     QuarztProxyRepository quarztProxyRepository;
 
     @Override
-    public List<Quartz_Proxy> getProxyList() {
+    public List<QuartzProxy> getProxyList() {
         return quarztProxyRepository.findAll();
     }
 
     @Override
-    public Quartz_Proxy findById(long id) {
+    public QuartzProxy findById(long id) {
         return quarztProxyRepository.findOne(id);
     }
 
     @Override
-    public Quartz_Proxy findByIp(String ip) {
+    public QuartzProxy findByIp(String ip) {
         return quarztProxyRepository.findOneByIp(ip);
     }
 
     @Override
-    public Quartz_Proxy saveProxy(Quartz_Proxy proxy) {
+    public QuartzProxy saveProxy(QuartzProxy proxy) {
         return quarztProxyRepository.save(proxy);
     }
 
     @Override
-    public Quartz_Proxy updateProxy(Quartz_Proxy proxy) {
+    public QuartzProxy updateProxy(QuartzProxy proxy) {
         return quarztProxyRepository.save(proxy);
     }
 

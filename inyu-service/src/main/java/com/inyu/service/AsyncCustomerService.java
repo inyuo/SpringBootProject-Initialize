@@ -1,7 +1,6 @@
 package com.inyu.service;
 
-import com.inyu.entity.Crm_Customer;
-import com.inyu.entity.Crm_User;
+import com.inyu.entity.CrmCustomer;
 
 import java.util.List;
 
@@ -9,10 +8,10 @@ import java.util.List;
  * Created by Administrator on 2018/3/20/020.
  */
 public interface AsyncCustomerService {
-    List<Crm_Customer> getCustomerList();
-    Crm_Customer getCustomerInfo(int id);
-    Crm_Customer getCustomerInfoByIndustry(String industry);
+    List<CrmCustomer> getCustomerList();
+    CrmCustomer getCustomerInfo(int id);
+    CrmCustomer getCustomerInfoByIndustry(String industry);
 
-    Crm_Customer addCustomer(Crm_Customer customer);
+    CrmCustomer addCustomer(CrmCustomer customer);
     boolean delCustomerById(int userId);
 }

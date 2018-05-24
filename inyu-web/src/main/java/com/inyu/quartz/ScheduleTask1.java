@@ -2,7 +2,7 @@ package com.inyu.quartz;
 
 import com.inyu.common.DateUtil;
 import com.inyu.common.MyHttpUtils;
-import com.inyu.entity.Quartz_Proxy;
+import com.inyu.entity.QuartzProxy;
 import com.inyu.service.AsyncQuartzProxyService;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
@@ -59,9 +59,9 @@ public class ScheduleTask1 implements Job, Serializable {
             String proxyPage = MyHttpUtils.sendGet(kuaiProxy, headers,null);
             Document parse = Jsoup.parse(proxyPage);
             Elements elements = parse.getElementsByClass("table table-bordered table-striped").select("tr");
-            Quartz_Proxy proxy = null;
+            QuartzProxy proxy = null;
             for (int i = 1; i < elements.size(); i++) {
-                proxy = new Quartz_Proxy();
+                proxy = new QuartzProxy();
                 Element element = elements.get(i);
                 Elements selects = element.select("td");
                 String ip = selects.get(0).ownText();
@@ -76,7 +76,7 @@ public class ScheduleTask1 implements Job, Serializable {
                 String time = selects.get(5).ownText().replace("秒", "");
                 proxy.setSpread(Float.parseFloat(time));
                 proxy.setStatus(0l);//默认可用
-                proxy.setLast_Validate(DateUtil.getSqlDateShort());
+                proxy.setLastValidate(DateUtil.getSqlDateShort());
                 //该记录已存在 & 更新
                 asyncQuartzProxyService.saveProxy(proxy);
             }

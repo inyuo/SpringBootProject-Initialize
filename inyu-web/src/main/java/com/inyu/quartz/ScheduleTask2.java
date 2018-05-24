@@ -2,7 +2,7 @@ package com.inyu.quartz;
 
 import com.inyu.common.DateUtil;
 import com.inyu.common.MyHttpUtils;
-import com.inyu.entity.Quartz_Proxy;
+import com.inyu.entity.QuartzProxy;
 import com.inyu.service.AsyncQuartzProxyService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -14,8 +14,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,17 +35,17 @@ public class ScheduleTask2 implements Job {
 
 
         try {
-            List<Quartz_Proxy> proxyList = asyncQuartzProxyService.getProxyList();
-            for (Quartz_Proxy quartz_proxy : proxyList) {
-                quartz_proxy.setLast_Validate(DateUtil.getSqlDateShort());
+            List<QuartzProxy> proxyList = asyncQuartzProxyService.getProxyList();
+            for (QuartzProxy QuartzProxy : proxyList) {
+                QuartzProxy.setLastValidate(DateUtil.getSqlDateShort());
                 //获取页面
-                String proxyPage = MyHttpUtils.sendGet(baidu, null,quartz_proxy);
+                String proxyPage = MyHttpUtils.sendGet(baidu, null,QuartzProxy);
                 if (proxyPage==null||proxyPage.indexOf("百度一下，你就知道")!=-1){
-                    quartz_proxy.setStatus(1l);
+                    QuartzProxy.setStatus(1l);
                 }else {
-                    quartz_proxy.setStatus(0l);
+                    QuartzProxy.setStatus(0l);
                 }
-                asyncQuartzProxyService.updateProxy(quartz_proxy);
+                asyncQuartzProxyService.updateProxy(QuartzProxy);
             }
         } catch (Exception e) {
             logger.error(e.getMessage());

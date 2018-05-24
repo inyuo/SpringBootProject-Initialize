@@ -1,18 +1,13 @@
 package com.inyu.service.impl;
 
 import com.inyu.common.DateUtil;
-import com.inyu.entity.Crm_Customer;
-import com.inyu.entity.Crm_User;
+import com.inyu.entity.CrmCustomer;
 import com.inyu.repo.CustomerRepository;
-import com.inyu.repo.UserRepository;
 import com.inyu.service.AsyncCustomerService;
-import com.inyu.service.AsyncUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.sql.Date;
@@ -33,34 +28,34 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
     CustomerRepository customerRepository;
 
     @Override
-    public List<Crm_Customer> getCustomerList() {
-        List<Crm_Customer> customers = customerRepository.findAll();
+    public List<CrmCustomer> getCustomerList() {
+        List<CrmCustomer> customers = customerRepository.findAll();
         return customers;
     }
 
     @Override
-    public Crm_Customer getCustomerInfo(int id) {
+    public CrmCustomer getCustomerInfo(int id) {
         return customerRepository.findOne(id);
     }
 
     @Override
-    public Crm_Customer getCustomerInfoByIndustry(String industry) {
+    public CrmCustomer getCustomerInfoByIndustry(String industry) {
         return customerRepository.getCustomerInfoByIndustry(industry);
     }
 
     @Override
-    public Crm_Customer addCustomer(Crm_Customer customer) {
-       Crm_Customer crm_customer = checkCustomer(customer);
+    public CrmCustomer addCustomer(CrmCustomer customer) {
+       CrmCustomer CrmCustomer = checkCustomer(customer);
         return customerRepository.save(customer);
     }
 
     //设置默认属性
-    private Crm_Customer checkCustomer(Crm_Customer customer) {
-        customer.setCreator_Role_Id(1l);
-        customer.setCreate_Time((Date) DateUtil.getNowDateShort());
-        customer.setUpdate_Time((Date) DateUtil.getNowDateShort());
+    private CrmCustomer checkCustomer(CrmCustomer customer) {
+        customer.setContactsId(1l);
+        customer.setCreateTime((Date) DateUtil.getNowDateShort());
+        customer.setUpdateTime((Date) DateUtil.getNowDateShort());
         customer.setLevel(0l);
-        customer.setIs_Locked(0l);
+        customer.setIsLocked(0l);
         customer.setOrigin("splider");
         customer.setOwnership("default");
         customer.setRating("0");

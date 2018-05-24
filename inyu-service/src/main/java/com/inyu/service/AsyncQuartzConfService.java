@@ -1,6 +1,6 @@
 package com.inyu.service;
 
-import com.inyu.entity.Quartz_Config;
+import com.inyu.entity.QuartzConfig;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface AsyncQuartzConfService {
 
-    List<Quartz_Config> getJobList();
+    List<QuartzConfig> getJobList();
 
-    Quartz_Config findById(long id);
+    QuartzConfig findById(long id);
 
     int updateJob(long id,String cron,String msg);
 

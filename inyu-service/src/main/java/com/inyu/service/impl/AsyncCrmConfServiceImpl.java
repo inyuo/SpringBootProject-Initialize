@@ -1,6 +1,7 @@
 package com.inyu.service.impl;
 
-import com.inyu.entity.Crm_Config;
+import com.inyu.entity.CrmConfig;
+import com.inyu.entity.CrmCustomer;
 import com.inyu.repo.CrmConfRepository;
 import com.inyu.service.AsyncCrmConfService;
 import org.slf4j.Logger;
@@ -24,33 +25,22 @@ public class AsyncCrmConfServiceImpl implements AsyncCrmConfService {
     CrmConfRepository crmConfRepository;
 
     @Override
-    public List<Crm_Config> getCrmConfList() {
+    public List<CrmConfig> getCrmConfList() {
         return crmConfRepository.findAll();
     }
 
     @Override
-    public Crm_Config getCrmCongById(long confId) {
+    public CrmConfig getCrmConfById(long confId) {
         return crmConfRepository.findOne(confId);
     }
 
     @Override
-    public Crm_Config addCustomer(Crm_Config conf) {
+    public CrmConfig addCustomer(CrmConfig conf) {
         return crmConfRepository.save(conf);
     }
 
     @Override
-    public boolean delCustomerById(long confId) {
-        try {
-            crmConfRepository.delete(confId);
-            return true;
-        }catch (Exception e){
-            logger.error("save crmConf error!",e);
-            return false;
-        }
-    }
-
-    @Override
-    public Crm_Config updateCrmConf(Crm_Config conf) {
+    public CrmConfig updateCrmConf(CrmConfig conf) {
         return crmConfRepository.saveAndFlush(conf);
     }
 }

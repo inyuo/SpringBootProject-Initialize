@@ -1,6 +1,6 @@
 package com.inyu.service;
 
-import com.inyu.entity.Quartz_Proxy;
+import com.inyu.entity.QuartzProxy;
 
 import java.util.List;
 
@@ -11,13 +11,13 @@ import java.util.List;
  */
 public interface AsyncQuartzProxyService {
 
-    List<Quartz_Proxy> getProxyList();
+    List<QuartzProxy> getProxyList();
 
-    Quartz_Proxy findById(long id);
+    QuartzProxy findById(long id);
 
-    Quartz_Proxy findByIp(String ip);
+    QuartzProxy findByIp(String ip);
 
-    Quartz_Proxy saveProxy(Quartz_Proxy proxy);
+    QuartzProxy saveProxy(QuartzProxy proxy);
 
-    Quartz_Proxy updateProxy(Quartz_Proxy proxy);
+    QuartzProxy updateProxy(QuartzProxy proxy);
 }

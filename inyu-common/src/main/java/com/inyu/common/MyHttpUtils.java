@@ -1,11 +1,9 @@
 package com.inyu.common;
 
-import com.inyu.entity.Quartz_Proxy;
-import org.apache.http.Header;
+import com.inyu.entity.QuartzProxy;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -37,7 +35,7 @@ public class MyHttpUtils {
 
     }
 
-    public static String sendGet(String url, Map<String,String> headers,Quartz_Proxy quartzProxy) {
+    public static String sendGet(String url, Map<String,String> headers,QuartzProxy quartzProxy) {
         CloseableHttpResponse response = null;
         String content = null;
         HttpHost proxy=null;

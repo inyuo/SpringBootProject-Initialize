@@ -1,6 +1,6 @@
 package com.inyu.service.impl;
 
-import com.inyu.entity.Quartz_Config;
+import com.inyu.entity.QuartzConfig;
 import com.inyu.repo.QuartzConfRepository;
 import com.inyu.service.AsyncQuartzConfService;
 import org.slf4j.Logger;
@@ -27,12 +27,12 @@ public class AsyncQuartzConfServiceImpl implements AsyncQuartzConfService{
 
 
     @Override
-    public List<Quartz_Config> getJobList() {
+    public List<QuartzConfig> getJobList() {
        return quartzConfRepository.findAll();
     }
 
     @Override
-    public Quartz_Config findById(long id) {
+    public QuartzConfig findById(long id) {
         return quartzConfRepository.findOne(id);
     }
 

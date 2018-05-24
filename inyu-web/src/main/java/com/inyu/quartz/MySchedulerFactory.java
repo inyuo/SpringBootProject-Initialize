@@ -1,18 +1,15 @@
 package com.inyu.quartz;
 
-import com.inyu.entity.Quartz_Config;
+import com.inyu.entity.QuartzConfig;
 import com.inyu.service.AsyncQuartzConfService;
-import com.inyu.service.AsyncQuartzProxyService;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -42,14 +39,14 @@ public class MySchedulerFactory {
     // 项目启动 开启任务
     private void startJob(Scheduler scheduler)  {
         try {
-            List<Quartz_Config> jobList = asyncQuartzConfService.getJobList();
-            for (Quartz_Config config : jobList) {
+            List<QuartzConfig> jobList = asyncQuartzConfService.getJobList();
+            for (QuartzConfig config : jobList) {
                 // 1-暂停的任务 0-正常运行任务
                 if (1l==config.getStatus()){
                     continue;
                 }
                 @SuppressWarnings("unchecked")
-                Class<? extends Job> clazz = (Class<? extends Job>) Class.forName(config.getQuartz_Class());
+                Class<? extends Job> clazz = (Class<? extends Job>) Class.forName(config.getQuartzClass());
                 JobDetail jobDetail = JobBuilder.newJob(clazz)
                         .withIdentity(config.getName(), config.getGroup()).build();
                 CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(config.getCron());
@@ -67,23 +64,23 @@ public class MySchedulerFactory {
     // 任务暂停
     public void pauseJob(long id) throws SchedulerException {
         Scheduler scheduler = getScheduler();
-        Quartz_Config quartz_config = asyncQuartzConfService.findById(id);
-        JobKey jobKey = JobKey.jobKey(quartz_config.getName(), quartz_config.getGroup());
+        QuartzConfig QuartzConfig = asyncQuartzConfService.findById(id);
+        JobKey jobKey = JobKey.jobKey(QuartzConfig.getName(), QuartzConfig.getGroup());
         scheduler.deleteJob(jobKey);
     }
 
     // 任务恢复
     public void resumeJob(long id) throws SchedulerException, ClassNotFoundException {
         Scheduler scheduler = getScheduler();
-        Quartz_Config quartz_config = asyncQuartzConfService.findById(id);
-        JobKey jobKey = JobKey.jobKey(quartz_config.getName(), quartz_config.getGroup());
-        Class<? extends Job> clazz = (Class<? extends Job>) Class.forName(quartz_config.getQuartz_Class());
+        QuartzConfig QuartzConfig = asyncQuartzConfService.findById(id);
+        JobKey jobKey = JobKey.jobKey(QuartzConfig.getName(), QuartzConfig.getGroup());
+        Class<? extends Job> clazz = (Class<? extends Job>) Class.forName(QuartzConfig.getQuartzClass());
         JobDetail jobDetail1 = scheduler.getJobDetail(jobKey);
         if (jobDetail1==null){
             JobDetail jobDetail = JobBuilder.newJob(clazz)
-                    .withIdentity(quartz_config.getName(), quartz_config.getGroup()).build();
-            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(quartz_config.getCron());
-            CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(quartz_config.getName(), quartz_config.getGroup())
+                    .withIdentity(QuartzConfig.getName(), QuartzConfig.getGroup()).build();
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(QuartzConfig.getCron());
+            CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(QuartzConfig.getName(), QuartzConfig.getGroup())
                     .withSchedule(scheduleBuilder).build();
             scheduler.scheduleJob(jobDetail, cronTrigger);
         }else {
