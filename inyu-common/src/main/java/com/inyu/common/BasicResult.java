@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2018/3/20/020.
  */
-public class BasicResult<T> implements Serializable {
+public class BasicResult<T>  implements Serializable {
 
     private static final long serialVersionUID = -4577255781088498763L;
     private static final int OK = 0;
@@ -17,8 +17,11 @@ public class BasicResult<T> implements Serializable {
     private String msg = ""; //描述信息
 
 
+
     public BasicResult() {
+        super();
     }
+
     //APIS
     public static BasicResult isOk(){
         return new BasicResult();
@@ -31,6 +34,10 @@ public class BasicResult<T> implements Serializable {
     }
     public BasicResult msg(Throwable e){
         this.setMsg(e.toString());
+        return this;
+    }
+    public BasicResult msg(String msg){
+        this.setMsg(msg);
         return this;
     }
     public BasicResult data(T data){

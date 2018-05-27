@@ -11,7 +11,6 @@
         <module>inyu-service</module>
         <module>inyu-web</module>
         <module>inyu-common</module>
-        <module>inyu-generate</module>
         <module>inyu-dal</module>
     </modules>
     <packaging>pom</packaging>
@@ -129,42 +128,33 @@
         <!-- 热部署 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
         <!-- pageHelper-->
         <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
             <version>1.13.1.RELEASE</version>
         </dependency>
 
+        <!--<dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.1.6</version>
+        </dependency>-->
+
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.1.1</version>
+            <version>1.2.3</version>
         </dependency>
 
-        <dependency>
+    <!--    <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
             <version>1.1.1</version>
-        </dependency>
+        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons</artifactId>
-            <version>1.13.1.RELEASE</version>
-        </dependency>
     </dependencies>
 
     <build>
