@@ -1,13 +1,4 @@
-## mybatis_config
-#mybatis:
-#    mapper-locations: classpath:mapper/*.xml
-##datasource
-
-#    datasource:
-#        name: ds0
-#        url: jdbc:mysql://localhost:3306/basic_crm?useSSL=false&useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-#        username: root
-#        password: root
+## mybatis_config 多数据源配置
 druid:
   datasource:
     name: mydatabases
@@ -29,6 +20,7 @@ druid:
     testOnReturn: false
     poolPreparedStatements: false  #如果是oracle 则可以设置为true  如果是mysql则设置false 分库分表较多的数据库，建议配置为false。
     maxOpenPreparedStatements: 20
+    show-sql: true
 
 custom:
     datasource:
@@ -51,10 +43,18 @@ custom:
         testOnReturn: false
         poolPreparedStatements: false  #如果是oracle 则可以设置为true  如果是mysql则设置false 分库分表较多的数据库，建议配置为false。
         maxOpenPreparedStatements: 20
+        show-sql: true
 
 
+#配置分页插件pagehelper
 pagehelper:
     helperDialect: mysql
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+
+logging:
+      level:
+        org:
+          hibernate:
+            SQL: DEBUG

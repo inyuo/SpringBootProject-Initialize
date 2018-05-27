@@ -1,14 +1,19 @@
 package com.inyu.controller;
 
 import com.inyu.common.BasicResult;
+import com.inyu.common.PageBean;
 import com.inyu.entity.CrmUser;
+import com.inyu.entity.exception.InyuException;
 import com.inyu.service.AsyncUserService;
+import com.inyu.service.ServiceCallback;
+import com.inyu.service.ServiceTemplate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -29,7 +34,8 @@ public class UserController {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     @Autowired
     AsyncUserService asyncUserService;
-
+    @Autowired
+    ServiceTemplate serviceTemplate;
     @ApiOperation("登录")
     @PostMapping(value = "login")
     public BasicResult login(@ApiParam("用户名：username")@RequestParam(value = "username",required = true)String username,
@@ -59,13 +65,13 @@ public class UserController {
     @ApiOperation("分页查询用户")
     @GetMapping("list")
     public BasicResult list(@ApiParam("查询条件：name")@RequestParam(value = "name",required = false)String name,
-                            @ApiParam("当前页：currentPage")@RequestParam(value = "currentPage",required = true)int currentPage,
-                            @ApiParam("每页多少条：pageSize")@RequestParam(value = "pageSize",required = true)int pageSize) {
+                            @ApiParam("当前页：currentPage")@RequestParam(value = "currentPage",required = true)Integer currentPage,
+                            @ApiParam("每页多少条：pageSize")@RequestParam(value = "pageSize",required = true)Integer pageSize) {
         try {
-
-           List<CrmUser> userList = asyncUserService.getUserList(name, null);
-
-            return BasicResult.isOk().data(userList);
+            PageBean<CrmUser> userList = asyncUserService.getUserList(name, currentPage, pageSize);
+            BasicResult result = BasicResult.isOk();
+            result.setData(userList);
+            return result;
         } catch (Exception e) {
             logger.error("获取所有用户失败！",e);
             return BasicResult.isFail(e);
@@ -106,20 +112,31 @@ public class UserController {
 
     @ApiOperation("添加用户")
     @PostMapping("add")
-    public BasicResult addUser(@ApiParam("User Model：addUser")@RequestBody CrmUser addUser,HttpServletResponse response) {
-        try {
-            CrmUser userValidate = asyncUserService.validate(addUser);
-            if (userValidate!=null){
-                logger.error("添加用户失败！用户名已被占用！");
-                return BasicResult.isFail().msg(new Throwable("用户名已被占用！"));
+    public BasicResult addUser(@ApiParam("User Model：addUser")@RequestBody CrmUser addUser) {
+        return serviceTemplate.execute(Integer.class,new ServiceCallback<BasicResult>(){
+            @Override
+            public void doLock() {
+
             }
-            int i = asyncUserService.addUser(addUser);
-            response.setContentType("application/json;charset=utf-8");
-            return BasicResult.isOk();
-        } catch (Exception e) {
-            logger.error("添加用户失败！",e);
-            return BasicResult.isFail(e);
-        }
+
+            @Override
+            public void check() {
+                if (addUser ==null){
+                    logger.error("添加记录为空");
+                    throw new  InyuException("Invalid Params","入参为空");
+                }
+            }
+
+            @Override
+            public BasicResult executeService() {
+                int save = asyncUserService.addUser(addUser);
+                if (save>=1){
+                    return BasicResult.isOk();
+                }else {
+                    return BasicResult.isFail().msg("添加用户失败！");
+                }
+            }
+        });
     }
 
 
@@ -140,17 +157,29 @@ public class UserController {
 
     @ApiOperation("批量删除用户")
     @PostMapping("removeUserList")
-    public BasicResult removeUser(@ApiParam("用户id：userIds")@RequestParam List userIds) {
-
-        try {
-            boolean bool = asyncUserService.delUserByIds(userIds);
-            if (!bool){
-                return BasicResult.isFail();
+    public BasicResult removeUser(@ApiParam("用户id：userIds")@RequestParam(value = "userIds",required = true)List userIds) {
+        return serviceTemplate.execute(Integer.class, new ServiceCallback<BasicResult>() {
+            @Override
+            public void doLock() {
             }
-        } catch (Exception e) {
-            logger.error("批量删除用户失败！",e);
-            return BasicResult.isFail(e);
-        }
-        return BasicResult.isOk();
+
+            @Override
+            public void check() {
+                if (CollectionUtils.isEmpty(userIds)) {
+                    logger.error("删除id列表为空");
+                    throw new InyuException("Invalid Params", "入参为空");
+                }
+            }
+
+            @Override
+            public BasicResult executeService() {
+                boolean ret = asyncUserService.delUserByIds(userIds);
+                if (ret) {
+                    return BasicResult.isOk();
+                } else {
+                    return BasicResult.isFail().msg("添加用户失败！");
+                }
+            }
+        });
     }
 }

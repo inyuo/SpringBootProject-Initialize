@@ -1,6 +1,8 @@
 package com.inyu.controller;
 
 import com.inyu.common.BasicResult;
+import com.inyu.common.PageBean;
+import com.inyu.entity.CrmCustomer;
 import com.inyu.service.AsyncCustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,10 +30,14 @@ public class CustomerController {
     @ApiOperation("获取所有客户")
     @GetMapping("list")
     public BasicResult list(@ApiParam("当前页：queryObj")@RequestParam(value = "queryObj",required = false)String queryObj,
-                            @ApiParam("当前页：currentPage")@RequestParam(value = "currentPage",required = true)String currentPage,
-                            @ApiParam("每页多少条：pageSize")@RequestParam(value = "pageSize",required = true)String pageSize) {
+                            @ApiParam("当前页：currentPage")@RequestParam(value = "currentPage",required = true)Integer currentPage,
+                            @ApiParam("每页多少条：pageSize")@RequestParam(value = "pageSize",required = true)Integer pageSize) {
         try {
-            return BasicResult.isOk().data(asyncCustomerService.getCustomerList());
+
+            PageBean<CrmCustomer> customerBean = asyncCustomerService.getCustomerList(queryObj,currentPage,pageSize);
+            BasicResult result = BasicResult.isOk();
+            result.setData(customerBean);
+            return result;
         } catch (Exception e) {
             logger.error("获取所有用户！",e);
             return BasicResult.isFail(e);
