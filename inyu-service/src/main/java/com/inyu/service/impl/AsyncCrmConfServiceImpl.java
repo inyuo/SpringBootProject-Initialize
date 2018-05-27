@@ -2,7 +2,7 @@ package com.inyu.service.impl;
 
 import com.inyu.entity.CrmConfig;
 import com.inyu.service.AsyncCrmConfService;
-import com.inyu.repo.CrmConfigMapper;
+import com.inyu.dal.master.CrmConfigMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

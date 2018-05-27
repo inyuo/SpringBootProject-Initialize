@@ -2,7 +2,7 @@ package com.inyu.service.impl;
 
 import com.inyu.entity.QuartzProxy;
 import com.inyu.service.AsyncQuartzProxyService;
-import com.inyu.repo.QuartzProxyMapper;
+import com.inyu.dal.master.QuartzProxyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.inyu.service.impl;
 
 import com.inyu.entity.QuartzConfig;
 import com.inyu.service.AsyncQuartzConfService;
-import com.inyu.repo.QuartzConfigMapper;
+import com.inyu.dal.master.QuartzConfigMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

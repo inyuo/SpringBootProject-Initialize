@@ -1,4 +1,4 @@
-package com.inyu.repo;
+package com.inyu.dal.custom;
 
 import com.inyu.entity.CrmUser;
 

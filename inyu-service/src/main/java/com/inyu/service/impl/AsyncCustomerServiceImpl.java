@@ -3,7 +3,7 @@ package com.inyu.service.impl;
 import com.inyu.common.DateUtil;
 import com.inyu.entity.CrmCustomer;
 import com.inyu.service.AsyncCustomerService;
-import com.inyu.repo.CrmCustomerMapper;
+import com.inyu.dal.master.CrmCustomerMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

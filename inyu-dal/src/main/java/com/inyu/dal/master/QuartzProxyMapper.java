@@ -1,4 +1,4 @@
-package com.inyu.repo;
+package com.inyu.dal.master;
 
 import com.inyu.entity.QuartzProxy;
 import org.apache.ibatis.annotations.Mapper;

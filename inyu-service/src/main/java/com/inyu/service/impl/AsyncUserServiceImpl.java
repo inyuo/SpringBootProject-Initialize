@@ -2,7 +2,7 @@ package com.inyu.service.impl;
 
 import com.inyu.entity.CrmUser;
 import com.inyu.service.AsyncUserService;
-import com.inyu.repo.CrmUserMapper;
+import com.inyu.dal.custom.CrmUserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
