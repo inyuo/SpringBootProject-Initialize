@@ -47,7 +47,7 @@
       last_login_time, lostpw_time, weixinid, 
       dashboard)
     values (#{userId,jdbcType=BIGINT}, #{roleId,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{nickname,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
       #{email,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{birthday,jdbcType=DATE}, #{regIp,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, 
@@ -101,4 +101,22 @@
     weixinid, dashboard
     from crm_user
   </select>
+
+  <select id="validateUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select user_id, role_id, category_id, `status`, `name`, `password`, nickname, salt,
+    sex, email, telephone, address, birthday, reg_ip, reg_time, last_login_time, lostpw_time,
+    weixinid, dashboard
+    from crm_user
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+
+  <select id="login" resultMap="BaseResultMap">
+    select user_id, role_id, category_id, `status`, `name`, `password`, nickname, salt,
+    sex, email, telephone, address, birthday, reg_ip, reg_time, last_login_time, lostpw_time,
+    weixinid, dashboard
+    from crm_user
+    where name = #{param1,jdbcType=VARCHAR}
+    and password = #{param2,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

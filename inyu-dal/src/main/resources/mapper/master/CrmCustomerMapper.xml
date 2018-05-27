@@ -121,4 +121,14 @@
     is_deleted, is_locked, delete_role_id, delete_time
     from crm_customer
   </select>
+
+
+  <select id="queryCustomerInfoByIndustry" resultMap="BaseResultMap">
+    select customer_id, owner_role_id, creator_role_id, contacts_id, `name`, email, origin,
+    licenc_no, website, telephone, landline_telephone, fax, satisfy, `level`, address,
+    zip_code, industry, annual_revenue, ownership, rating, create_time, update_time,
+    is_deleted, is_locked, delete_role_id, delete_time
+    from crm_customer
+    where industry like  '%${industry}%'
+  </select>
 </mapper>

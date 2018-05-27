@@ -1,6 +1,7 @@
 package com.inyu.dal;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -12,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+
+import java.util.Properties;
 
 
 @Configuration
@@ -51,5 +54,17 @@ public class MasterDataSourcesConfig {
     @Primary
     public DataSourceTransactionManager masterTransactionManager(){
         return new DataSourceTransactionManager(masterDruidDataSource());
+    }
+    @Bean(name = "pageHelper")
+    public PageHelper pageHelper(){
+        System.out.println("开始配置数据分页插件");
+        PageHelper pageHelper = new PageHelper();
+        Properties properties = new Properties();
+        properties.setProperty("offsetAsPageNum","true");
+        properties.setProperty("rowBoundsWithCount","true");
+        properties.setProperty("reasonable","true");
+        properties.setProperty("dialect","mysql");    //配置mysql数据库的方言
+        pageHelper.setProperties(properties);
+        return pageHelper;
     }
 }

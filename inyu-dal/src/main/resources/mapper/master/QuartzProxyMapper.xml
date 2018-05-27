@@ -67,4 +67,11 @@
     select id, ip, port, `status`, `location`, `type`, spread, last_validate
     from quartz_proxy
   </select>
+
+  <select id="queryProxyByIp" parameterType="java.lang.Long" resultMap="BaseResultMap">
+
+    select id, ip, port, `status`, `location`, `type`, spread, last_validate
+    from quartz_proxy
+    where ip = #{ip,jdbcType=BIGINT}
+  </select>
 </mapper>

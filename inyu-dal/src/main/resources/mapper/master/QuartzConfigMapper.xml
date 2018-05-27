@@ -65,4 +65,10 @@
     select id, `group`, `name`, cron, `status`, msg, quartz_class
     from quartz_config
   </select>
+
+  <update id="updateStatusByPK" parameterType="com.inyu.entity.QuartzConfig">
+    update quartz_config
+    set `status` = #{status,jdbcType=INTEGER},
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>
