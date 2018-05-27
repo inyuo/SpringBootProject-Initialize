@@ -1,9 +1,8 @@
 package com.inyu.service.impl;
 
 import com.inyu.entity.CrmConfig;
-import com.inyu.entity.CrmCustomer;
-import com.inyu.repo.CrmConfRepository;
 import com.inyu.service.AsyncCrmConfService;
+import com.inyu.repo.CrmConfigMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +21,25 @@ public class AsyncCrmConfServiceImpl implements AsyncCrmConfService {
     private TransactionTemplate transactionTemplate;
 
     @Autowired
-    CrmConfRepository crmConfRepository;
+    CrmConfigMapper crmConfigMapper;
 
     @Override
     public List<CrmConfig> getCrmConfList() {
-        return crmConfRepository.findAll();
+        return crmConfigMapper.selectAll();
     }
 
     @Override
-    public CrmConfig getCrmConfById(long confId) {
-        return crmConfRepository.findOne(confId);
+    public CrmConfig getCrmConfById(int confId) {
+        return crmConfigMapper.selectByPrimaryKey(confId);
     }
 
     @Override
-    public CrmConfig addCustomer(CrmConfig conf) {
-        return crmConfRepository.save(conf);
+    public int addCustomer(CrmConfig conf) {
+        return crmConfigMapper.insert(conf);
     }
 
     @Override
-    public CrmConfig updateCrmConf(CrmConfig conf) {
-        return crmConfRepository.saveAndFlush(conf);
+    public int updateCrmConf(CrmConfig conf) {
+        return crmConfigMapper.updateByPrimaryKey(conf);
     }
 }

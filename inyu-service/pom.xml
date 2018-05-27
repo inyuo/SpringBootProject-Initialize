@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.inyu</groupId>
-            <artifactId>inyu-repo</artifactId>
+            <artifactId>inyu-dal</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -25,7 +25,10 @@
             <groupId>com.inyu</groupId>
             <artifactId>inyu-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
         </dependency>
     </dependencies>
 

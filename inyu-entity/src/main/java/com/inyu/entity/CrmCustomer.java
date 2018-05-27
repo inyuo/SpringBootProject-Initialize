@@ -1,299 +1,915 @@
 package com.inyu.entity;
 
-import com.inyu.entity.basic.ToString;
-
-import javax.persistence.*;
-
-@Entity
-@Table(name = "crm_customer")
-public class CrmCustomer extends ToString {
-
- @Id
- @Column(name = "customer_id")
-  private long customerId;
- @Column(name = "owner_role_id")
-  private long ownerRoleId;
- @Column(name = "creator_role_id")
-  private long creatorRoleId;
- @Column(name = "contacts_id")
-  private long contactsId;
- @Column(name = "name")
-  private String name;
- @Column(name = "email")
-  private String email;
- @Column(name = "origin")
-  private String origin;
- @Column(name = "licenc_no")
-  private String licencNo;
- @Column(name = "website")
-  private String website;
- @Column(name = "telephone")
-  private String telephone;
- @Column(name = "landline_telephone")
-  private String landlineTelephone;
- @Column(name = "fax")
-  private String fax;
- @Column(name = "satisfy")
-  private long satisfy;
- @Column(name = "level")
-  private long level;
- @Column(name = "address")
-  private String address;
- @Column(name = "zip_code")
-  private String zipCode;
- @Column(name = "industry")
-  private String industry;
- @Column(name = "annual_revenue")
-  private String annualRevenue;
- @Column(name = "ownership")
-  private String ownership;
- @Column(name = "rating")
-  private String rating;
- @Column(name = "create_time")
-  private java.sql.Date createTime;
- @Column(name = "update_time")
-  private java.sql.Date updateTime;
- @Column(name = "is_deleted")
-  private long isDeleted;
- @Column(name = "is_locked")
-  private long isLocked;
- @Column(name = "delete_role_id")
-  private long deleteRoleId;
- @Column(name = "delete_time")
-  private java.sql.Date deleteTime;
-
-
-  public long getCustomerId() {
-    return customerId;
-  }
-
-  public void setCustomerId(long customerId) {
-    this.customerId = customerId;
-  }
-
-
-  public long getOwnerRoleId() {
-    return ownerRoleId;
-  }
-
-  public void setOwnerRoleId(long ownerRoleId) {
-    this.ownerRoleId = ownerRoleId;
-  }
-
-
-  public long getCreatorRoleId() {
-    return creatorRoleId;
-  }
-
-  public void setCreatorRoleId(long creatorRoleId) {
-    this.creatorRoleId = creatorRoleId;
-  }
-
-
-  public long getContactsId() {
-    return contactsId;
-  }
-
-  public void setContactsId(long contactsId) {
-    this.contactsId = contactsId;
-  }
-
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-
-  public String getOrigin() {
-    return origin;
-  }
-
-  public void setOrigin(String origin) {
-    this.origin = origin;
-  }
-
-
-  public String getLicencNo() {
-    return licencNo;
-  }
-
-  public void setLicencNo(String licencNo) {
-    this.licencNo = licencNo;
-  }
-
-
-  public String getWebsite() {
-    return website;
-  }
-
-  public void setWebsite(String website) {
-    this.website = website;
-  }
-
-
-  public String getTelephone() {
-    return telephone;
-  }
-
-  public void setTelephone(String telephone) {
-    this.telephone = telephone;
-  }
-
-
-  public String getLandlineTelephone() {
-    return landlineTelephone;
-  }
-
-  public void setLandlineTelephone(String landlineTelephone) {
-    this.landlineTelephone = landlineTelephone;
-  }
-
-
-  public String getFax() {
-    return fax;
-  }
-
-  public void setFax(String fax) {
-    this.fax = fax;
-  }
-
-
-  public long getSatisfy() {
-    return satisfy;
-  }
-
-  public void setSatisfy(long satisfy) {
-    this.satisfy = satisfy;
-  }
-
-
-  public long getLevel() {
-    return level;
-  }
-
-  public void setLevel(long level) {
-    this.level = level;
-  }
-
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-
-  public String getZipCode() {
-    return zipCode;
-  }
-
-  public void setZipCode(String zipCode) {
-    this.zipCode = zipCode;
-  }
-
-
-  public String getIndustry() {
-    return industry;
-  }
-
-  public void setIndustry(String industry) {
-    this.industry = industry;
-  }
-
-
-  public String getAnnualRevenue() {
-    return annualRevenue;
-  }
-
-  public void setAnnualRevenue(String annualRevenue) {
-    this.annualRevenue = annualRevenue;
-  }
-
-
-  public String getOwnership() {
-    return ownership;
-  }
-
-  public void setOwnership(String ownership) {
-    this.ownership = ownership;
-  }
-
-
-  public String getRating() {
-    return rating;
-  }
-
-  public void setRating(String rating) {
-    this.rating = rating;
-  }
-
-
-  public java.sql.Date getCreateTime() {
-    return createTime;
-  }
-
-  public void setCreateTime(java.sql.Date createTime) {
-    this.createTime = createTime;
-  }
-
-
-  public java.sql.Date getUpdateTime() {
-    return updateTime;
-  }
-
-  public void setUpdateTime(java.sql.Date updateTime) {
-    this.updateTime = updateTime;
-  }
-
-
-  public long getIsDeleted() {
-    return isDeleted;
-  }
-
-  public void setIsDeleted(long isDeleted) {
-    this.isDeleted = isDeleted;
-  }
-
-
-  public long getIsLocked() {
-    return isLocked;
-  }
-
-  public void setIsLocked(long isLocked) {
-    this.isLocked = isLocked;
-  }
-
-
-  public long getDeleteRoleId() {
-    return deleteRoleId;
-  }
-
-  public void setDeleteRoleId(long deleteRoleId) {
-    this.deleteRoleId = deleteRoleId;
-  }
-
-
-  public java.sql.Date getDeleteTime() {
-    return deleteTime;
-  }
-
-  public void setDeleteTime(java.sql.Date deleteTime) {
-    this.deleteTime = deleteTime;
-  }
-
+import java.io.Serializable;
+import java.util.Date;
+
+public class CrmCustomer implements Serializable {
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.customer_id
+     *
+     * @mbg.generated
+     */
+    private Integer customerId;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.owner_role_id
+     *
+     * @mbg.generated
+     */
+    private Integer ownerRoleId;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.creator_role_id
+     *
+     * @mbg.generated
+     */
+    private Integer creatorRoleId;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.contacts_id
+     *
+     * @mbg.generated
+     */
+    private Integer contactsId;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.name
+     *
+     * @mbg.generated
+     */
+    private String name;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.email
+     *
+     * @mbg.generated
+     */
+    private String email;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.origin
+     *
+     * @mbg.generated
+     */
+    private String origin;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.licenc_no
+     *
+     * @mbg.generated
+     */
+    private String licencNo;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.website
+     *
+     * @mbg.generated
+     */
+    private String website;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.telephone
+     *
+     * @mbg.generated
+     */
+    private String telephone;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.landline_telephone
+     *
+     * @mbg.generated
+     */
+    private String landlineTelephone;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.fax
+     *
+     * @mbg.generated
+     */
+    private String fax;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.satisfy
+     *
+     * @mbg.generated
+     */
+    private Integer satisfy;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.level
+     *
+     * @mbg.generated
+     */
+    private Integer level;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.address
+     *
+     * @mbg.generated
+     */
+    private String address;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.zip_code
+     *
+     * @mbg.generated
+     */
+    private String zipCode;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.industry
+     *
+     * @mbg.generated
+     */
+    private String industry;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.annual_revenue
+     *
+     * @mbg.generated
+     */
+    private String annualRevenue;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.ownership
+     *
+     * @mbg.generated
+     */
+    private String ownership;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.rating
+     *
+     * @mbg.generated
+     */
+    private String rating;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.create_time
+     *
+     * @mbg.generated
+     */
+    private Date createTime;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.update_time
+     *
+     * @mbg.generated
+     */
+    private Date updateTime;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.is_deleted
+     *
+     * @mbg.generated
+     */
+    private Integer isDeleted;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.is_locked
+     *
+     * @mbg.generated
+     */
+    private Integer isLocked;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.delete_role_id
+     *
+     * @mbg.generated
+     */
+    private Integer deleteRoleId;
+
+    /**
+     *
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database column crm_customer.delete_time
+     *
+     * @mbg.generated
+     */
+    private Date deleteTime;
+
+    /**
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database table crm_customer
+     *
+     * @mbg.generated
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.customer_id
+     *
+     * @return the value of crm_customer.customer_id
+     *
+     * @mbg.generated
+     */
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.customer_id
+     *
+     * @param customerId the value for crm_customer.customer_id
+     *
+     * @mbg.generated
+     */
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.owner_role_id
+     *
+     * @return the value of crm_customer.owner_role_id
+     *
+     * @mbg.generated
+     */
+    public Integer getOwnerRoleId() {
+        return ownerRoleId;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.owner_role_id
+     *
+     * @param ownerRoleId the value for crm_customer.owner_role_id
+     *
+     * @mbg.generated
+     */
+    public void setOwnerRoleId(Integer ownerRoleId) {
+        this.ownerRoleId = ownerRoleId;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.creator_role_id
+     *
+     * @return the value of crm_customer.creator_role_id
+     *
+     * @mbg.generated
+     */
+    public Integer getCreatorRoleId() {
+        return creatorRoleId;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.creator_role_id
+     *
+     * @param creatorRoleId the value for crm_customer.creator_role_id
+     *
+     * @mbg.generated
+     */
+    public void setCreatorRoleId(Integer creatorRoleId) {
+        this.creatorRoleId = creatorRoleId;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.contacts_id
+     *
+     * @return the value of crm_customer.contacts_id
+     *
+     * @mbg.generated
+     */
+    public Integer getContactsId() {
+        return contactsId;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.contacts_id
+     *
+     * @param contactsId the value for crm_customer.contacts_id
+     *
+     * @mbg.generated
+     */
+    public void setContactsId(Integer contactsId) {
+        this.contactsId = contactsId;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.name
+     *
+     * @return the value of crm_customer.name
+     *
+     * @mbg.generated
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.name
+     *
+     * @param name the value for crm_customer.name
+     *
+     * @mbg.generated
+     */
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.email
+     *
+     * @return the value of crm_customer.email
+     *
+     * @mbg.generated
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.email
+     *
+     * @param email the value for crm_customer.email
+     *
+     * @mbg.generated
+     */
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.origin
+     *
+     * @return the value of crm_customer.origin
+     *
+     * @mbg.generated
+     */
+    public String getOrigin() {
+        return origin;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.origin
+     *
+     * @param origin the value for crm_customer.origin
+     *
+     * @mbg.generated
+     */
+    public void setOrigin(String origin) {
+        this.origin = origin == null ? null : origin.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.licenc_no
+     *
+     * @return the value of crm_customer.licenc_no
+     *
+     * @mbg.generated
+     */
+    public String getLicencNo() {
+        return licencNo;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.licenc_no
+     *
+     * @param licencNo the value for crm_customer.licenc_no
+     *
+     * @mbg.generated
+     */
+    public void setLicencNo(String licencNo) {
+        this.licencNo = licencNo == null ? null : licencNo.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.website
+     *
+     * @return the value of crm_customer.website
+     *
+     * @mbg.generated
+     */
+    public String getWebsite() {
+        return website;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.website
+     *
+     * @param website the value for crm_customer.website
+     *
+     * @mbg.generated
+     */
+    public void setWebsite(String website) {
+        this.website = website == null ? null : website.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.telephone
+     *
+     * @return the value of crm_customer.telephone
+     *
+     * @mbg.generated
+     */
+    public String getTelephone() {
+        return telephone;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.telephone
+     *
+     * @param telephone the value for crm_customer.telephone
+     *
+     * @mbg.generated
+     */
+    public void setTelephone(String telephone) {
+        this.telephone = telephone == null ? null : telephone.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.landline_telephone
+     *
+     * @return the value of crm_customer.landline_telephone
+     *
+     * @mbg.generated
+     */
+    public String getLandlineTelephone() {
+        return landlineTelephone;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.landline_telephone
+     *
+     * @param landlineTelephone the value for crm_customer.landline_telephone
+     *
+     * @mbg.generated
+     */
+    public void setLandlineTelephone(String landlineTelephone) {
+        this.landlineTelephone = landlineTelephone == null ? null : landlineTelephone.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.fax
+     *
+     * @return the value of crm_customer.fax
+     *
+     * @mbg.generated
+     */
+    public String getFax() {
+        return fax;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.fax
+     *
+     * @param fax the value for crm_customer.fax
+     *
+     * @mbg.generated
+     */
+    public void setFax(String fax) {
+        this.fax = fax == null ? null : fax.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.satisfy
+     *
+     * @return the value of crm_customer.satisfy
+     *
+     * @mbg.generated
+     */
+    public Integer getSatisfy() {
+        return satisfy;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.satisfy
+     *
+     * @param satisfy the value for crm_customer.satisfy
+     *
+     * @mbg.generated
+     */
+    public void setSatisfy(Integer satisfy) {
+        this.satisfy = satisfy;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.level
+     *
+     * @return the value of crm_customer.level
+     *
+     * @mbg.generated
+     */
+    public Integer getLevel() {
+        return level;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.level
+     *
+     * @param level the value for crm_customer.level
+     *
+     * @mbg.generated
+     */
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.address
+     *
+     * @return the value of crm_customer.address
+     *
+     * @mbg.generated
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.address
+     *
+     * @param address the value for crm_customer.address
+     *
+     * @mbg.generated
+     */
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.zip_code
+     *
+     * @return the value of crm_customer.zip_code
+     *
+     * @mbg.generated
+     */
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.zip_code
+     *
+     * @param zipCode the value for crm_customer.zip_code
+     *
+     * @mbg.generated
+     */
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode == null ? null : zipCode.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.industry
+     *
+     * @return the value of crm_customer.industry
+     *
+     * @mbg.generated
+     */
+    public String getIndustry() {
+        return industry;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.industry
+     *
+     * @param industry the value for crm_customer.industry
+     *
+     * @mbg.generated
+     */
+    public void setIndustry(String industry) {
+        this.industry = industry == null ? null : industry.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.annual_revenue
+     *
+     * @return the value of crm_customer.annual_revenue
+     *
+     * @mbg.generated
+     */
+    public String getAnnualRevenue() {
+        return annualRevenue;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.annual_revenue
+     *
+     * @param annualRevenue the value for crm_customer.annual_revenue
+     *
+     * @mbg.generated
+     */
+    public void setAnnualRevenue(String annualRevenue) {
+        this.annualRevenue = annualRevenue == null ? null : annualRevenue.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.ownership
+     *
+     * @return the value of crm_customer.ownership
+     *
+     * @mbg.generated
+     */
+    public String getOwnership() {
+        return ownership;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.ownership
+     *
+     * @param ownership the value for crm_customer.ownership
+     *
+     * @mbg.generated
+     */
+    public void setOwnership(String ownership) {
+        this.ownership = ownership == null ? null : ownership.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.rating
+     *
+     * @return the value of crm_customer.rating
+     *
+     * @mbg.generated
+     */
+    public String getRating() {
+        return rating;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.rating
+     *
+     * @param rating the value for crm_customer.rating
+     *
+     * @mbg.generated
+     */
+    public void setRating(String rating) {
+        this.rating = rating == null ? null : rating.trim();
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.create_time
+     *
+     * @return the value of crm_customer.create_time
+     *
+     * @mbg.generated
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.create_time
+     *
+     * @param createTime the value for crm_customer.create_time
+     *
+     * @mbg.generated
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.update_time
+     *
+     * @return the value of crm_customer.update_time
+     *
+     * @mbg.generated
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.update_time
+     *
+     * @param updateTime the value for crm_customer.update_time
+     *
+     * @mbg.generated
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.is_deleted
+     *
+     * @return the value of crm_customer.is_deleted
+     *
+     * @mbg.generated
+     */
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.is_deleted
+     *
+     * @param isDeleted the value for crm_customer.is_deleted
+     *
+     * @mbg.generated
+     */
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.is_locked
+     *
+     * @return the value of crm_customer.is_locked
+     *
+     * @mbg.generated
+     */
+    public Integer getIsLocked() {
+        return isLocked;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.is_locked
+     *
+     * @param isLocked the value for crm_customer.is_locked
+     *
+     * @mbg.generated
+     */
+    public void setIsLocked(Integer isLocked) {
+        this.isLocked = isLocked;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.delete_role_id
+     *
+     * @return the value of crm_customer.delete_role_id
+     *
+     * @mbg.generated
+     */
+    public Integer getDeleteRoleId() {
+        return deleteRoleId;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.delete_role_id
+     *
+     * @param deleteRoleId the value for crm_customer.delete_role_id
+     *
+     * @mbg.generated
+     */
+    public void setDeleteRoleId(Integer deleteRoleId) {
+        this.deleteRoleId = deleteRoleId;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method returns the value of the database column crm_customer.delete_time
+     *
+     * @return the value of crm_customer.delete_time
+     *
+     * @mbg.generated
+     */
+    public Date getDeleteTime() {
+        return deleteTime;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method sets the value of the database column crm_customer.delete_time
+     *
+     * @param deleteTime the value for crm_customer.delete_time
+     *
+     * @mbg.generated
+     */
+    public void setDeleteTime(Date deleteTime) {
+        this.deleteTime = deleteTime;
+    }
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table crm_customer
+     *
+     * @mbg.generated
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", customerId=").append(customerId);
+        sb.append(", ownerRoleId=").append(ownerRoleId);
+        sb.append(", creatorRoleId=").append(creatorRoleId);
+        sb.append(", contactsId=").append(contactsId);
+        sb.append(", name=").append(name);
+        sb.append(", email=").append(email);
+        sb.append(", origin=").append(origin);
+        sb.append(", licencNo=").append(licencNo);
+        sb.append(", website=").append(website);
+        sb.append(", telephone=").append(telephone);
+        sb.append(", landlineTelephone=").append(landlineTelephone);
+        sb.append(", fax=").append(fax);
+        sb.append(", satisfy=").append(satisfy);
+        sb.append(", level=").append(level);
+        sb.append(", address=").append(address);
+        sb.append(", zipCode=").append(zipCode);
+        sb.append(", industry=").append(industry);
+        sb.append(", annualRevenue=").append(annualRevenue);
+        sb.append(", ownership=").append(ownership);
+        sb.append(", rating=").append(rating);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", isDeleted=").append(isDeleted);
+        sb.append(", isLocked=").append(isLocked);
+        sb.append(", deleteRoleId=").append(deleteRoleId);
+        sb.append(", deleteTime=").append(deleteTime);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
 }

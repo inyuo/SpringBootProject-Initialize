@@ -1,11 +1,11 @@
 package com.inyu.service.impl;
 
-import com.inyu.common.MyHttpUtils;
 import com.inyu.entity.CrmConfig;
 import com.inyu.entity.CrmCustomer;
 import com.inyu.service.AsyncCrmConfService;
 import com.inyu.service.AsyncCustomerService;
 import com.inyu.service.AsyncSpliderService;
+import com.inyu.service.utils.MyHttpUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -42,7 +42,7 @@ public class AsyncSpliderServiceImpl implements AsyncSpliderService {
     @Override
     public synchronized boolean getPageInfo(String baseCounter, String method) {
 
-        CrmConfig crmConf = asyncCrmConfService.getCrmConfById(6l);
+        CrmConfig crmConf = asyncCrmConfService.getCrmConfById(6);
         String spliderCounter = crmConf.getValue();
         final String baseUrl = "https://www.11467.com/guangzhou/co/" + spliderCounter + ".htm";
         CrmCustomer customer = new CrmCustomer();
@@ -91,7 +91,7 @@ public class AsyncSpliderServiceImpl implements AsyncSpliderService {
                 return false;
             }
             // 存储用户
-            CrmCustomer CrmCustomer = asyncCustomerService.addCustomer(customer);
+            int i = asyncCustomerService.addCustomer(customer);
             return Boolean.TRUE;
         } catch (Exception e) {
             logger.error("splider-save-customer--> 异常:", e);

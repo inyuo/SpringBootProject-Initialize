@@ -1,15 +1,15 @@
 package com.inyu.service.impl;
 
 import com.inyu.entity.QuartzConfig;
-import com.inyu.repo.QuartzConfRepository;
 import com.inyu.service.AsyncQuartzConfService;
+import com.inyu.repo.QuartzConfigMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -23,26 +23,26 @@ public class AsyncQuartzConfServiceImpl implements AsyncQuartzConfService{
     private TransactionTemplate transactionTemplate;
 
     @Autowired
-    QuartzConfRepository quartzConfRepository;
+    QuartzConfigMapper quartzConfigMapper;
 
 
     @Override
     public List<QuartzConfig> getJobList() {
-       return quartzConfRepository.findAll();
+       return quartzConfigMapper.selectAll();
     }
 
     @Override
     public QuartzConfig findById(long id) {
-        return quartzConfRepository.findOne(id);
+        return quartzConfigMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public int updateJob(long id, String cron, String msg) {
-        return quartzConfRepository.editJob(id,cron,msg);
+        return quartzConfigMapper.updateMsgByPK(id,cron,msg);
     }
 
     @Override
     public int updateJobStatus(long id, int status) {
-        return quartzConfRepository.updateJobStatus(id,status);
+        return quartzConfigMapper.updateStatusByPK(id,status);
     }
 }

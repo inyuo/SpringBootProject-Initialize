@@ -12,6 +12,6 @@ public interface AsyncCustomerService {
     CrmCustomer getCustomerInfo(int id);
     CrmCustomer getCustomerInfoByIndustry(String industry);
 
-    CrmCustomer addCustomer(CrmCustomer customer);
+    int addCustomer(CrmCustomer customer);
     boolean delCustomerById(int userId);
 }

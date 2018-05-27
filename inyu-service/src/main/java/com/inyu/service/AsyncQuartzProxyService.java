@@ -17,7 +17,7 @@ public interface AsyncQuartzProxyService {
 
     QuartzProxy findByIp(String ip);
 
-    QuartzProxy saveProxy(QuartzProxy proxy);
+    int saveProxy(QuartzProxy proxy);
 
-    QuartzProxy updateProxy(QuartzProxy proxy);
+    int updateProxy(QuartzProxy proxy);
 }

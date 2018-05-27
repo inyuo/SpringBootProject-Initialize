@@ -1,7 +1,7 @@
 package com.inyu.quartz;
 
 import com.inyu.common.DateUtil;
-import com.inyu.common.MyHttpUtils;
+import com.inyu.service.utils.MyHttpUtils;
 import com.inyu.entity.QuartzProxy;
 import com.inyu.service.AsyncQuartzProxyService;
 import org.apache.commons.lang.StringUtils;
@@ -75,7 +75,7 @@ public class ScheduleTask1 implements Job, Serializable {
                 proxy.setLocation(selects.get(4).ownText());
                 String time = selects.get(5).ownText().replace("秒", "");
                 proxy.setSpread(Float.parseFloat(time));
-                proxy.setStatus(0l);//默认可用
+                proxy.setStatus(0);//默认可用
                 proxy.setLastValidate(DateUtil.getSqlDateShort());
                 //该记录已存在 & 更新
                 asyncQuartzProxyService.saveProxy(proxy);

@@ -1,5 +1,6 @@
-package com.inyu.common;
+package com.inyu.service.utils;
 
+import com.inyu.common.BasicResult;
 import com.inyu.entity.QuartzProxy;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;

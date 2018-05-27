@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -62,9 +61,9 @@ public class UserController {
     public BasicResult list(@ApiParam("查询条件：name")@RequestParam(value = "name",required = false)String name,
                             @ApiParam("当前页：currentPage")@RequestParam(value = "currentPage",required = true)int currentPage,
                             @ApiParam("每页多少条：pageSize")@RequestParam(value = "pageSize",required = true)int pageSize) {
-        try {Sort sort = new Sort(Sort.Direction.DESC,"user_id");
-            Pageable pageRequest = new PageRequest(currentPage, pageSize,sort);
-            Page<CrmUser> userList = asyncUserService.getUserList(name, pageRequest);
+        try {
+
+           List<CrmUser> userList = asyncUserService.getUserList(name, null);
 
             return BasicResult.isOk().data(userList);
         } catch (Exception e) {
@@ -114,9 +113,9 @@ public class UserController {
                 logger.error("添加用户失败！用户名已被占用！");
                 return BasicResult.isFail().msg(new Throwable("用户名已被占用！"));
             }
-            CrmUser userInfo = asyncUserService.addUser(addUser);
+            int i = asyncUserService.addUser(addUser);
             response.setContentType("application/json;charset=utf-8");
-            return BasicResult.isOk().data(userInfo);
+            return BasicResult.isOk();
         } catch (Exception e) {
             logger.error("添加用户失败！",e);
             return BasicResult.isFail(e);

@@ -1,10 +1,10 @@
 package com.inyu.service.thread;
 
-import com.inyu.common.MyHttpUtils;
 import com.inyu.entity.CrmConfig;
 import com.inyu.entity.CrmCustomer;
 import com.inyu.service.AsyncCrmConfService;
 import com.inyu.service.AsyncCustomerService;
+import com.inyu.service.utils.MyHttpUtils;
 import com.inyu.service.utils.SpringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,7 +31,7 @@ public class MySpliderThread implements Runnable {
                 this.asyncCrmConfService= SpringUtils.getApplicationContext().getBean(AsyncCrmConfService.class);
                 this.asyncCustomerService= SpringUtils.getApplicationContext().getBean(AsyncCustomerService.class);
                 Thread.sleep(1000);
-                CrmConfig crmConf = asyncCrmConfService.getCrmConfById(6l);
+                CrmConfig crmConf = asyncCrmConfService.getCrmConfById(6);
                 String spliderCounter = crmConf.getValue();
                 final String baseUrl = "https://www.11467.com/guangzhou/co/" + spliderCounter + ".htm";
                 CrmCustomer customer = new CrmCustomer();
@@ -79,7 +79,7 @@ public class MySpliderThread implements Runnable {
                         return ;
                     }
                     // 存储用户
-                    CrmCustomer CrmCustomer = asyncCustomerService.addCustomer(customer);
+                    int i = asyncCustomerService.addCustomer(customer);
                     return ;
                 } catch (Exception e) {
                     logger.error("splider-save-customer--> error", e);

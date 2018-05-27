@@ -1,7 +1,6 @@
 package com.inyu.service;
 
 import com.inyu.entity.CrmConfig;
-import com.inyu.entity.CrmCustomer;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ import java.util.List;
  */
 public interface AsyncCrmConfService {
     List<CrmConfig> getCrmConfList();
-    CrmConfig getCrmConfById(long confId);
-    CrmConfig addCustomer(CrmConfig conf);
-    CrmConfig updateCrmConf(CrmConfig conf);
+    CrmConfig getCrmConfById(int confId);
+    int addCustomer(CrmConfig conf);
+    int updateCrmConf(CrmConfig conf);
 }

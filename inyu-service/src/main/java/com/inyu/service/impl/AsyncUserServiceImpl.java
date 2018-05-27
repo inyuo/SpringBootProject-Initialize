@@ -1,20 +1,17 @@
 package com.inyu.service.impl;
 
 import com.inyu.entity.CrmUser;
-import com.inyu.repo.UserRepository;
 import com.inyu.service.AsyncUserService;
+import com.inyu.repo.CrmUserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.persistence.criteria.*;
+import java.awt.print.Pageable;
 import java.util.List;
 
 /**
@@ -30,7 +27,7 @@ public class AsyncUserServiceImpl
     private TransactionTemplate transactionTemplate;
 
     @Autowired
-    UserRepository userRepository;
+    CrmUserMapper crmUserMapper;
 
     /**
      * 登录验证
@@ -40,7 +37,7 @@ public class AsyncUserServiceImpl
      */
     @Override
     public CrmUser login(CrmUser user) {
-        return userRepository.login(user.getName(), user.getPassword());
+        return crmUserMapper.login(user.getName(), user.getPassword());
     }
 
     /**
@@ -49,17 +46,10 @@ public class AsyncUserServiceImpl
      * @return
      */
     @Override
-    public Page<CrmUser> getUserList(String name, Pageable page) {
-        Specification<CrmUser> spec = new Specification<CrmUser>() {
-            @Override
-            public Predicate toPredicate(Root<CrmUser> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                Path<String> name = root.get("name");
-                Predicate predicate = cb.like(name, "%" + name + "%");
-                return predicate;
-            }
-        };
-        Page<CrmUser> all = userRepository.findAll(spec, page);
-        return all;
+    public List<CrmUser> getUserList(String name, Pageable page) {
+
+        List<CrmUser> crmUsers = crmUserMapper.selectAll();
+        return null;
     }
 
     /**
@@ -70,7 +60,7 @@ public class AsyncUserServiceImpl
      */
     @Override
     public CrmUser getUserInfo(Long uid) {
-        return userRepository.findOne(uid);
+        return crmUserMapper.selectByPrimaryKey(uid);
     }
 
     /**
@@ -81,7 +71,7 @@ public class AsyncUserServiceImpl
      */
     @Override
     public CrmUser validate(CrmUser user) {
-        return userRepository.validateUserName(user.getName());
+        return crmUserMapper.validateUserName(user.getName());
     }
 
     /**
@@ -92,11 +82,11 @@ public class AsyncUserServiceImpl
      */
 
     @Override
-    public CrmUser addUser(CrmUser addUser) {
-        return transactionTemplate.execute(new TransactionCallback<CrmUser>() {
+    public int addUser(CrmUser addUser) {
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
             @Override
-            public CrmUser doInTransaction(TransactionStatus transactionStatus) {
-                CrmUser save = userRepository.save(addUser);
+            public Integer doInTransaction(TransactionStatus transactionStatus) {
+                int save = crmUserMapper.insert(addUser);
                 return save;
             }
         });
@@ -110,7 +100,7 @@ public class AsyncUserServiceImpl
      */
     public boolean delUserById(long userId) {
         try {
-            userRepository.delete(userId);
+            crmUserMapper.deleteByPrimaryKey(userId);
         } catch (Exception e) {
             logger.error("删除失败!", e);
             return false;
@@ -131,7 +121,7 @@ public class AsyncUserServiceImpl
             public Boolean doInTransaction(TransactionStatus transactionStatus) {
                 try {
                     for (Long userId : userIds) {
-                        userRepository.delete(userId);
+                        crmUserMapper.deleteByPrimaryKey(userId);
                     }
                     logger.info("批量删除用户:ids" + userIds);
                     return true;

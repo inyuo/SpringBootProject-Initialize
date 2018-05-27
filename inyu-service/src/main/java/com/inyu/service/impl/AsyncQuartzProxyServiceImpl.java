@@ -1,8 +1,8 @@
 package com.inyu.service.impl;
 
 import com.inyu.entity.QuartzProxy;
-import com.inyu.repo.QuarztProxyRepository;
 import com.inyu.service.AsyncQuartzProxyService;
+import com.inyu.repo.QuartzProxyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,31 +22,31 @@ public class AsyncQuartzProxyServiceImpl implements AsyncQuartzProxyService {
     private TransactionTemplate transactionTemplate;
 
     @Autowired
-    QuarztProxyRepository quarztProxyRepository;
+    QuartzProxyMapper quartzProxyMapper;
 
     @Override
     public List<QuartzProxy> getProxyList() {
-        return quarztProxyRepository.findAll();
+        return quartzProxyMapper.selectAll();
     }
 
     @Override
     public QuartzProxy findById(long id) {
-        return quarztProxyRepository.findOne(id);
+        return quartzProxyMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public QuartzProxy findByIp(String ip) {
-        return quarztProxyRepository.findOneByIp(ip);
+        return quartzProxyMapper.queryProxyByIp(ip);
     }
 
     @Override
-    public QuartzProxy saveProxy(QuartzProxy proxy) {
-        return quarztProxyRepository.save(proxy);
+    public int saveProxy(QuartzProxy proxy) {
+        return quartzProxyMapper.insert(proxy);
     }
 
     @Override
-    public QuartzProxy updateProxy(QuartzProxy proxy) {
-        return quarztProxyRepository.save(proxy);
+    public int updateProxy(QuartzProxy proxy) {
+        return quartzProxyMapper.updateByPrimaryKey(proxy);
     }
 
 }

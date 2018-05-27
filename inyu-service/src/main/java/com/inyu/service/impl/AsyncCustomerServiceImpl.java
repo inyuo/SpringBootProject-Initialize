@@ -2,8 +2,8 @@ package com.inyu.service.impl;
 
 import com.inyu.common.DateUtil;
 import com.inyu.entity.CrmCustomer;
-import com.inyu.repo.CustomerRepository;
 import com.inyu.service.AsyncCustomerService;
+import com.inyu.repo.CrmCustomerMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,37 +25,37 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
     private TransactionTemplate transactionTemplate;
 
     @Autowired
-    CustomerRepository customerRepository;
+    CrmCustomerMapper crmCustomerMapper;
 
     @Override
     public List<CrmCustomer> getCustomerList() {
-        List<CrmCustomer> customers = customerRepository.findAll();
+        List<CrmCustomer> customers = crmCustomerMapper.selectAll();
         return customers;
     }
 
     @Override
     public CrmCustomer getCustomerInfo(int id) {
-        return customerRepository.findOne(id);
+        return crmCustomerMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public CrmCustomer getCustomerInfoByIndustry(String industry) {
-        return customerRepository.getCustomerInfoByIndustry(industry);
+        return crmCustomerMapper.queryCustomerInfoByIndustry(industry);
     }
 
     @Override
-    public CrmCustomer addCustomer(CrmCustomer customer) {
+    public int addCustomer(CrmCustomer customer) {
        CrmCustomer CrmCustomer = checkCustomer(customer);
-        return customerRepository.save(customer);
+        return crmCustomerMapper.insert(customer);
     }
 
     //设置默认属性
     private CrmCustomer checkCustomer(CrmCustomer customer) {
-        customer.setContactsId(1l);
+        customer.setContactsId(1);
         customer.setCreateTime((Date) DateUtil.getNowDateShort());
         customer.setUpdateTime((Date) DateUtil.getNowDateShort());
-        customer.setLevel(0l);
-        customer.setIsLocked(0l);
+        customer.setLevel(0);
+        customer.setIsLocked(0);
         customer.setOrigin("splider");
         customer.setOwnership("default");
         customer.setRating("0");
@@ -66,7 +66,7 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
     @Override
     public boolean delCustomerById(int cid) {
         try {
-            customerRepository.delete(cid);
+            crmCustomerMapper.deleteByPrimaryKey(cid);
             return Boolean.TRUE;
         }catch (Exception e){
             return Boolean.FALSE;

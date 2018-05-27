@@ -1,7 +1,7 @@
 package com.inyu.quartz;
 
 import com.inyu.common.DateUtil;
-import com.inyu.common.MyHttpUtils;
+import com.inyu.service.utils.MyHttpUtils;
 import com.inyu.entity.QuartzProxy;
 import com.inyu.service.AsyncQuartzProxyService;
 import org.quartz.Job;
@@ -41,9 +41,9 @@ public class ScheduleTask2 implements Job {
                 //获取页面
                 String proxyPage = MyHttpUtils.sendGet(baidu, null,QuartzProxy);
                 if (proxyPage==null||proxyPage.indexOf("百度一下，你就知道")!=-1){
-                    QuartzProxy.setStatus(1l);
+                    QuartzProxy.setStatus(1);
                 }else {
-                    QuartzProxy.setStatus(0l);
+                    QuartzProxy.setStatus(0);
                 }
                 asyncQuartzProxyService.updateProxy(QuartzProxy);
             }
