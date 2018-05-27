@@ -1,5 +1,6 @@
 package com.inyu.repo;
 
+
 import com.inyu.entity.QuartzConfig;
 
 import java.util.List;
