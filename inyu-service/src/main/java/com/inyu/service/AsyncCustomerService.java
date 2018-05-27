@@ -1,14 +1,13 @@
 package com.inyu.service;
 
+import com.inyu.common.PageBean;
 import com.inyu.entity.CrmCustomer;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2018/3/20/020.
  */
 public interface AsyncCustomerService {
-    List<CrmCustomer> getCustomerList();
+    PageBean<CrmCustomer> getCustomerList(String queryObj, Integer currentPage, Integer pageSize);
     CrmCustomer getCustomerInfo(int id);
     CrmCustomer getCustomerInfoByIndustry(String industry);
 

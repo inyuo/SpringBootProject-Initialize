@@ -28,7 +28,8 @@ public class AsyncQuartzConfServiceImpl implements AsyncQuartzConfService{
 
     @Override
     public List<QuartzConfig> getJobList() {
-       return quartzConfigMapper.selectAll();
+        List<QuartzConfig> quartzConfigList = quartzConfigMapper.selectAll();
+        return quartzConfigList;
     }
 
     @Override

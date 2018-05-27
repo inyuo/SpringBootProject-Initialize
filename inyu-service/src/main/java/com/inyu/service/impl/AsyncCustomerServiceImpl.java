@@ -1,9 +1,12 @@
 package com.inyu.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.inyu.common.DateUtil;
+import com.inyu.common.PageBean;
+import com.inyu.dal.master.CrmCustomerMapper;
 import com.inyu.entity.CrmCustomer;
 import com.inyu.service.AsyncCustomerService;
-import com.inyu.dal.master.CrmCustomerMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.sql.Date;
-import java.util.List;
 
 /**
  * 用户接口
@@ -20,7 +22,8 @@ import java.util.List;
 @Service
 public class AsyncCustomerServiceImpl implements AsyncCustomerService {
 
-    private Logger logger= LoggerFactory.getLogger(AsyncCustomerServiceImpl.class);
+
+    private Logger logger = LoggerFactory.getLogger(AsyncCustomerServiceImpl.class);
 
     private TransactionTemplate transactionTemplate;
 
@@ -28,9 +31,14 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
     CrmCustomerMapper crmCustomerMapper;
 
     @Override
-    public List<CrmCustomer> getCustomerList() {
-        List<CrmCustomer> customers = crmCustomerMapper.selectAll();
-        return customers;
+    public PageBean<CrmCustomer> getCustomerList(String queryObj, Integer currentPage, Integer pageSize) {
+        //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
+        PageHelper.startPage(currentPage, pageSize);
+        Page<CrmCustomer> crmCustomers = crmCustomerMapper.selectAll();
+        int countNums = crmCustomers.size();            //总记录数
+        PageBean<CrmCustomer> pageData = new PageBean<>(currentPage, pageSize, countNums);
+        pageData.setItemList(crmCustomers);
+        return pageData;
     }
 
     @Override
@@ -45,7 +53,7 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
 
     @Override
     public int addCustomer(CrmCustomer customer) {
-       CrmCustomer CrmCustomer = checkCustomer(customer);
+        CrmCustomer CrmCustomer = checkCustomer(customer);
         return crmCustomerMapper.insert(customer);
     }
 
@@ -68,7 +76,7 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
         try {
             crmCustomerMapper.deleteByPrimaryKey(cid);
             return Boolean.TRUE;
-        }catch (Exception e){
+        } catch (Exception e) {
             return Boolean.FALSE;
         }
     }

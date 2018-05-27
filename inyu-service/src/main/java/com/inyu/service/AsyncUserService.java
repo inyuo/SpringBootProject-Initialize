@@ -1,8 +1,8 @@
 package com.inyu.service;
 
+import com.inyu.common.PageBean;
 import com.inyu.entity.CrmUser;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 /**
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface AsyncUserService {
     CrmUser login(CrmUser user);
-    List<CrmUser> getUserList(String name,Pageable apge);
+    PageBean<CrmUser> getUserList(String name, Integer currentPage, Integer pageSize);
     CrmUser getUserInfo(Long uid);
     CrmUser validate(CrmUser user);
 

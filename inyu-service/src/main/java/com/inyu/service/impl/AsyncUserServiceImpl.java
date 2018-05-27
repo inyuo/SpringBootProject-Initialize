@@ -1,17 +1,15 @@
 package com.inyu.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.inyu.common.PageBean;
+import com.inyu.dal.custom.CrmUserMapper;
 import com.inyu.entity.CrmUser;
 import com.inyu.service.AsyncUserService;
-import com.inyu.dal.custom.CrmUserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionTemplate;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 /**
@@ -24,7 +22,7 @@ public class AsyncUserServiceImpl
 
     private Logger logger = LoggerFactory.getLogger(AsyncUserServiceImpl.class);
 
-    private TransactionTemplate transactionTemplate;
+
 
     @Autowired
     CrmUserMapper crmUserMapper;
@@ -46,10 +44,13 @@ public class AsyncUserServiceImpl
      * @return
      */
     @Override
-    public List<CrmUser> getUserList(String name, Pageable page) {
-
-        List<CrmUser> crmUsers = crmUserMapper.selectAll();
-        return null;
+    public PageBean<CrmUser> getUserList(String name, Integer currentPage, Integer pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<CrmUser> userList = crmUserMapper.selectAll();
+        int countNums = userList.size();            //总记录数
+        PageBean<CrmUser> pageData = new PageBean<>(currentPage, pageSize, countNums);
+        pageData.setItemList(userList);
+        return pageData;
     }
 
     /**
@@ -83,13 +84,12 @@ public class AsyncUserServiceImpl
 
     @Override
     public int addUser(CrmUser addUser) {
-        return transactionTemplate.execute(new TransactionCallback<Integer>() {
-            @Override
-            public Integer doInTransaction(TransactionStatus transactionStatus) {
-                int save = crmUserMapper.insert(addUser);
-                return save;
-            }
-        });
+        try {
+            return crmUserMapper.insert(addUser);
+        } catch (Exception e) {
+            logger.error("删除失败!", e);
+            return -1;
+        }
     }
 
     /**
@@ -116,20 +116,15 @@ public class AsyncUserServiceImpl
      */
     @Override
     public boolean delUserByIds(List<Long> userIds) {
-        return transactionTemplate.execute(new TransactionCallback<Boolean>() {
-            @Override
-            public Boolean doInTransaction(TransactionStatus transactionStatus) {
-                try {
-                    for (Long userId : userIds) {
-                        crmUserMapper.deleteByPrimaryKey(userId);
-                    }
-                    logger.info("批量删除用户:ids" + userIds);
-                    return true;
-                } catch (Exception e) {
-                    logger.error("批量删除用户出错", e);
-                    return false;
-                }
+        try {
+            for (Long userId : userIds) {
+                crmUserMapper.deleteByPrimaryKey(userId);
             }
-        });
+            logger.info("批量删除用户:ids" + userIds);
+            return true;
+        } catch (Exception e) {
+            logger.error("批量删除用户出错", e);
+            return false;
+        }
     }
 }
