@@ -47,10 +47,10 @@ public class AsyncUserServiceImpl
     public PageBean<CrmUser> getUserList(String name, Integer currentPage, Integer pageSize) {
         PageHelper.startPage(currentPage, pageSize);
         List<CrmUser> userList = crmUserMapper.selectAll();
-        int countNums = userList.size();            //总记录数
-        PageBean<CrmUser> pageData = new PageBean<>(currentPage, pageSize, countNums);
-        pageData.setItemList(userList);
-        return pageData;
+        int totalNum = userList.size();            //总记录数
+        PageBean<CrmUser> pageInfo = new PageBean<>(currentPage, pageSize, totalNum,Boolean.TRUE);
+        pageInfo.setItemList(userList);
+        return pageInfo;
     }
 
     /**

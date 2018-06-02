@@ -64,13 +64,13 @@ public class UserController {
 
     @ApiOperation("分页查询用户")
     @GetMapping("list")
-    public BasicResult list(@ApiParam("查询条件：name")@RequestParam(value = "name",required = false)String name,
+    public BasicResult<PageBean<CrmUser>> list(@ApiParam("查询条件：name")@RequestParam(value = "name",required = false)String name,
                             @ApiParam("当前页：currentPage")@RequestParam(value = "currentPage",required = true)Integer currentPage,
                             @ApiParam("每页多少条：pageSize")@RequestParam(value = "pageSize",required = true)Integer pageSize) {
         try {
-            PageBean<CrmUser> userList = asyncUserService.getUserList(name, currentPage, pageSize);
+            PageBean<CrmUser> users = asyncUserService.getUserList(name, currentPage, pageSize);
             BasicResult result = BasicResult.isOk();
-            result.setData(userList);
+            result.setData(users);
             return result;
         } catch (Exception e) {
             logger.error("获取所有用户失败！",e);
