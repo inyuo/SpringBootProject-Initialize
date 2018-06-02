@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inyu.dal.CrmUserMapper">
+  <resultMap id="BaseResultMap" type="com.inyu.entity.CrmUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="reg_ip" jdbcType="VARCHAR" property="regIp" />
+    <result column="reg_time" jdbcType="TIMESTAMP" property="regTime" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="lostpw_time" jdbcType="TIMESTAMP" property="lostpwTime" />
+    <result column="weixinid" jdbcType="VARCHAR" property="weixinid" />
+    <result column="dashboard" jdbcType="LONGVARCHAR" property="dashboard" />
+  </resultMap>
+</mapper>
