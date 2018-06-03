@@ -2,10 +2,7 @@ package com.inyu.controller;
 
 
 import com.inyu.common.BasicResult;
-import com.inyu.service.AsyncCrmConfService;
-import com.inyu.service.AsyncCustomerService;
 import com.inyu.service.AsyncSpliderService;
-import com.inyu.service.thread.MySpliderThread;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -23,7 +20,7 @@ import java.util.concurrent.Executors;
 @RestController
 @CrossOrigin
 @RequestMapping("/splider/*")
-public class SpliderController {
+public class SpliderController extends AbstractController {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     ExecutorService pool = Executors.newFixedThreadPool(5);

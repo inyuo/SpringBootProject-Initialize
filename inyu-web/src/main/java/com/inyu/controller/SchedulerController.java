@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/quartz/*")
-public class SchedulerController {
+public class SchedulerController extends AbstractController  {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
 

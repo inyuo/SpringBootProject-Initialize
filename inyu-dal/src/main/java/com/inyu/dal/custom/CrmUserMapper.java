@@ -49,4 +49,5 @@ public interface CrmUserMapper {
 
     CrmUser login(String name, String password);
 
+    CrmUser selectByName();
 }

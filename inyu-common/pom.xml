@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>jingo</artifactId>
+        <artifactId>inyu-parent</artifactId>
         <groupId>com.inyu</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -11,5 +11,16 @@
 
     <artifactId>inyu-common</artifactId>
 
+    <properties>
+        <joda.version>2.9.9</joda.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda.version}</version>
+        </dependency>
+
+    </dependencies>
 
 </project>

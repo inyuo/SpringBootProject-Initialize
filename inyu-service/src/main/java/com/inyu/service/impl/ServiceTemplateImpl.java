@@ -1,6 +1,7 @@
 package com.inyu.service.impl;
 
 import com.inyu.common.BasicResult;
+import com.inyu.entity.exception.InyuException;
 import com.inyu.service.ServiceCallback;
 import com.inyu.service.ServiceTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,14 +73,12 @@ public class ServiceTemplateImpl implements ServiceTemplate {
                     result = action.executeService();
                     // 返回值异常处理
                     if (result == null || !(result instanceof BasicResult)) {
-                         throw new Exception();
+                         throw new InyuException();
                     }
 
                 } catch (Exception e) {
                     // 业务异常捕获, 回滚, 打日志TODO
-
                     status.setRollbackOnly();
-
                     return result;
                 } catch (Throwable e2) {
                     // 系统异常捕获, 回滚, 打日志TODO

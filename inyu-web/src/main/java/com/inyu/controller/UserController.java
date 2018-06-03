@@ -3,23 +3,33 @@ package com.inyu.controller;
 import com.inyu.common.BasicResult;
 import com.inyu.common.PageBean;
 import com.inyu.entity.CrmUser;
+import com.inyu.entity.enu.ExceptionEnum;
 import com.inyu.entity.exception.InyuException;
+import com.inyu.service.AsyncSysCaptchaService;
 import com.inyu.service.AsyncUserService;
 import com.inyu.service.ServiceCallback;
 import com.inyu.service.ServiceTemplate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -30,36 +40,57 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/user/*")
-public class UserController {
+public class UserController extends AbstractController {
+
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
+
     @Autowired
     AsyncUserService asyncUserService;
     @Autowired
     ServiceTemplate serviceTemplate;
+    @Autowired
+    AsyncSysCaptchaService asyncSysCaptchaService;
+
     @ApiOperation("登录")
     @PostMapping(value = "login")
     public BasicResult login(@ApiParam("用户名：username")@RequestParam(value = "username",required = true)String username,
                              @ApiParam("密码：password")@RequestParam(value = "password",required = true)String password,
                              HttpServletRequest request, HttpServletResponse response) {
-        try {
-            CrmUser loginUser = new CrmUser();
-            loginUser.setName(username);
-            loginUser.setPassword(password);
-            CrmUser userInfo = asyncUserService.login(loginUser);
-            if (userInfo!=null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("userInfo", userInfo);
-                Cookie uidCookie = new Cookie("uid", userInfo.getUserId() + "");
-                uidCookie.setMaxAge(60 * 60 * 24);
-                response.addCookie(uidCookie);
-                return BasicResult.isOk().data(userInfo);
-            }else {
-                throw new Exception("登陆失败");
+
+        return serviceTemplate.execute(BasicResult.class,new ServiceCallback<BasicResult>(){
+
+            @Override
+            public void doLock() {
+
             }
-        } catch (Exception e) {
-            logger.error("登陆失败！",e);
-            return BasicResult.isFail(e);
-        }
+
+            @Override
+            public void check() {
+                boolean captcha = asyncSysCaptchaService.validate("","");
+                if(!captcha){
+                    logger.error("登陆失败！");
+                   throw new InyuException(ExceptionEnum.INVALID_PARAM.getIndex(),"验证码有误");
+                }
+            }
+
+            @Override
+            public BasicResult executeService() {
+                //用户信息
+                CrmUser user = asyncUserService.getUserInfoByName(username);
+
+                CrmUser userInfo = asyncUserService.login(user);
+                if (userInfo!=null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("userInfo", userInfo);
+                    Cookie uidCookie = new Cookie("uid", userInfo.getUserId() + "");
+                    uidCookie.setMaxAge(60 * 60 * 24);
+                    response.addCookie(uidCookie);
+                    return BasicResult.isOk().data(userInfo);
+                }else {
+                    return BasicResult.isFail().msg("登录失败");
+                }
+            }
+        });
     }
 
     @ApiOperation("分页查询用户")
@@ -78,7 +109,22 @@ public class UserController {
         }
     }
 
+    /**
+     * 验证码
+     */
+    @ApiOperation("获取验证码")
+    @GetMapping("captcha.jpg")
+    public void captcha(HttpServletResponse response,@ApiParam("uuid：uuid")@RequestParam(value = "uuid",required = true) String uuid)throws ServletException, IOException {
+        response.setHeader("Cache-Control", "no-store, no-cache");
+        response.setContentType("image/jpeg");
 
+        //获取图片验证码
+        BufferedImage image = asyncSysCaptchaService.getCaptcha(uuid);
+
+        ServletOutputStream out = response.getOutputStream();
+        ImageIO.write(image, "jpg", out);
+        IOUtils.closeQuietly(out);
+    }
 
     @ApiOperation("获取当前用户")
     @GetMapping("getCurrentUser")
@@ -129,6 +175,10 @@ public class UserController {
 
             @Override
             public BasicResult executeService() {
+                //sha256加密
+                String salt = RandomStringUtils.randomAlphanumeric(20);
+                addUser.setPassword(new Sha256Hash(addUser.getPassword(), salt).toHex());
+                addUser.setSalt(salt);
                 int save = asyncUserService.addUser(addUser);
                 if (save>=1){
                     return BasicResult.isOk();

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.inyu</groupId>
-    <artifactId>jingo</artifactId>
+    <artifactId>inyu-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>inyu-entity</module>
@@ -15,7 +15,7 @@
     </modules>
     <packaging>pom</packaging>
 
-    <name>jingo</name>
+    <name>inyu-parent</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -136,12 +136,6 @@
             <artifactId>spring-data-commons</artifactId>
             <version>1.13.1.RELEASE</version>
         </dependency>
-
-        <!--<dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>4.1.6</version>
-        </dependency>-->
 
         <dependency>
             <groupId>com.github.pagehelper</groupId>

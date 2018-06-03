@@ -119,4 +119,13 @@
     and password = #{param2,jdbcType=VARCHAR}
   </select>
 
+  <select id="selectByName" resultMap="BaseResultMap">
+    select user_id, role_id, category_id, `status`, `name`, `password`, nickname, salt,
+    sex, email, telephone, address, birthday, reg_ip, reg_time, last_login_time, lostpw_time,
+    weixinid, dashboard
+    from crm_user
+    where name = #{username,jdbcType=VARCHAR}
+
+  </select>
+
 </mapper>

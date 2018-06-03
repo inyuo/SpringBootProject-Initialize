@@ -17,8 +17,7 @@ import java.util.List;
  * Created by jinyu on 2018/3/21/021.
  */
 @Service
-public class AsyncUserServiceImpl
-        implements AsyncUserService {
+public class AsyncUserServiceImpl  implements AsyncUserService {
 
     private Logger logger = LoggerFactory.getLogger(AsyncUserServiceImpl.class);
 
@@ -126,5 +125,10 @@ public class AsyncUserServiceImpl
             logger.error("批量删除用户出错", e);
             return false;
         }
+    }
+
+    @Override
+    public CrmUser getUserInfoByName(String username) {
+        return crmUserMapper.selectByName();
     }
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class AsyncAspect {
 
     /** 拦截开启新线程 async开头 */
-    @Pointcut("execution(* com.inyu.*.async*(..))")
+    @Pointcut("execution(* com.inyu.service.*.async*(..))")
     public void newThreadAddLoggerID() {
     }
 

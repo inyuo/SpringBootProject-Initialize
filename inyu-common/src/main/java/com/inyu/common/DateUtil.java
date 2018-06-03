@@ -1,15 +1,13 @@
 package com.inyu.common;
 
+import org.joda.time.DateTime;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 时间工具类
@@ -39,7 +37,17 @@ public  class DateUtil {
         return currentTime_2;
     }
 
-
+    /**
+     * 对日期的【分钟】进行加/减
+     *
+     * @param date 日期
+     * @param minutes 分钟数，负数为减
+     * @return 加/减几分钟后的日期
+     */
+    public static Date addDateMinutes(Date date, int minutes) {
+        DateTime dateTime = new DateTime(date);
+        return dateTime.plusMinutes(minutes).toDate();
+    }
     /**
      * 获取现在时间
      *

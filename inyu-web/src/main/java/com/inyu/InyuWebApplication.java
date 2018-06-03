@@ -6,23 +6,17 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-
-import java.io.IOException;
-import java.util.concurrent.Executor;
 
 /**
- * Created by Administrator on 2018/3/20/020.
+ * Created by inyu on 2018/3/20/020.
  */
 @SpringBootApplication
 @EnableScheduling
 @EnableAutoConfiguration
 @EnableAsync
+@ServletComponentScan       //描到自己编写的servlet和filter druid监控
 public class InyuWebApplication extends SpringBootServletInitializer{
     public static LoggerIDInheritableThreadLocal loggerIDInheritableThreadLocal = new LoggerIDInheritableThreadLocal();
 

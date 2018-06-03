@@ -5,6 +5,7 @@
 <!-- 配置生成器 -->
 <generatorConfiguration>
     <!--执行generator插件生成文件的命令： call mvn mybatis-generator:generate -e -->
+    <!-- 【快捷方式】 idea mavenProject 菜单中 选择 inyu-dal plugin : mybatis-generator -->
     <!-- 引入配置文件 -->
     <properties resource="mybatisGeneratorinit.properties"/>
     <!--classPathEntry:数据库的JDBC驱动,换成你自己的驱动位置 可选 -->
@@ -27,12 +28,11 @@
         <!-- 格式化XML代码 -->
         <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
-
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
 
         <!-- 注释 -->
         <commentGenerator >
-            <property name="suppressAllComments" value="false"/><!-- 是否取消注释 -->
+            <property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
             <property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳-->
         </commentGenerator>
 
@@ -45,23 +45,27 @@
         </javaTypeResolver>
 
         <!-- 生成实体类地址 -->
-        <javaModelGenerator targetPackage="com.inyu.entity" targetProject="${project}" >
+        <javaModelGenerator targetPackage="com.inyu.entity" targetProject="${entity}" >
             <property name="enableSubPackages" value="false"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!-- 生成mapxml文件 -->
-        <sqlMapGenerator targetPackage="mappers" targetProject="${resources}" >
+        <sqlMapGenerator targetPackage="master" targetProject="${resources}" >
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
-        <!-- 生成mapxml对应client，也就是接口dao -->
-        <javaClientGenerator targetPackage="com.inyu.dal" targetProject="${project}" type="XMLMAPPER" >
+        <!-- 生成mapxml对应client，Mapper接口  -->
+        <javaClientGenerator targetPackage="com.inyu.dal.master" targetProject="${project}" type="XMLMAPPER" >
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- table可以有多个,每个数据库中的表都可以写一个table，tableName表示要匹配的数据库表,也可以在tableName属性中通过使用%通配符来匹配所有数据库表,只有匹配的表才会自动生成文件 -->
-        <table tableName="crm_user" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"/>
+        <!--<table tableName="crm_user" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"/>
         <table tableName="crm_config" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"/>
         <table tableName="crm_customer" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"/>
         <table tableName="quartz_config" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"/>
         <table tableName="quartz_proxy" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"/>
+        -->
+        <!--<table tableName="sys_captcha" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"/>-->
+        <table tableName="crm_action_log" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"/>
+
     </context>
 </generatorConfiguration>

@@ -18,4 +18,6 @@ public interface AsyncUserService {
 
     boolean delUserById(long userId);
     boolean delUserByIds(List<Long> userIds);
+
+    CrmUser getUserInfoByName(String username);
 }

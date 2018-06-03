@@ -16,6 +16,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import java.util.Properties;
 
+/**
+ * @author inyu
+ */
 
 @Configuration
 @MapperScan(basePackages = MasterDataSourcesConfig.PACKAGES,sqlSessionFactoryRef = "masterSqlSessionFactory")

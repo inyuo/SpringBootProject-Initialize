@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * 自定义浏览器信息 2getPageInfo
  */
 public class MyHttpUtils {
 

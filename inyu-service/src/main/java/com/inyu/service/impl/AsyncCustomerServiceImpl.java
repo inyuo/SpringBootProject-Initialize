@@ -17,7 +17,7 @@ import java.sql.Date;
 
 /**
  * 用户接口
- * Created by jinyu on 2018/3/21/021.
+ * Created by inyu on 2018/3/21/021.
  */
 @Service
 public class AsyncCustomerServiceImpl implements AsyncCustomerService {
@@ -36,7 +36,7 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
         PageHelper.startPage(currentPage, pageSize);
         Page<CrmCustomer> crmCustomers = crmCustomerMapper.selectAll();
         int totalCounnt = crmCustomers.size();            //总记录数
-        PageBean<CrmCustomer> pageData = new PageBean<>(currentPage, pageSize, totalCounnt,Boolean.TRUE);
+        PageBean<CrmCustomer> pageData = new PageBean<>(currentPage, pageSize, totalCounnt,Boolean.TRUE );
         pageData.setItemList(crmCustomers);
         return pageData;
     }

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/customer/*")
-public class CustomerController {
+public class CustomerController extends AbstractController  {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
 
