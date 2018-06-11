@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inyu.dal.master.SysCaptchaMapper">
+  <resultMap id="BaseResultMap" type="com.inyu.entity.SysCaptcha">
+
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="gmt_last_update" jdbcType="TIMESTAMP" property="gmtLastUpdate" />
+    <result column="gmt_expire" jdbcType="TIMESTAMP" property="gmtExpire" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+
+    delete from sys_captcha
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.inyu.entity.SysCaptcha">
+
+    insert into sys_captcha (id, uuid, code, 
+      gmt_last_update, gmt_expire)
+    values (#{id,jdbcType=BIGINT}, #{uuid,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{gmtLastUpdate,jdbcType=TIMESTAMP}, #{gmtExpire,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.inyu.entity.SysCaptcha">
+
+    update sys_captcha
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      gmt_last_update = #{gmtLastUpdate,jdbcType=TIMESTAMP},
+      gmt_expire = #{gmtExpire,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+
+    select id, uuid, code, gmt_last_update, gmt_expire
+    from sys_captcha
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+
+    select id, uuid, code, gmt_last_update, gmt_expire
+    from sys_captcha
+  </select>
+
+  <delete id="deleteByUid" parameterType="java.lang.String">
+
+    delete from sys_captcha
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectByUid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+
+    select id, uuid, code, gmt_last_update, gmt_expire
+    from sys_captcha
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+</mapper>

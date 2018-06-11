@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inyu.dal.master.CrmActionLogMapper">
+  <resultMap id="BaseResultMap" type="com.inyu.entity.CrmActionLog">
+    <id column="log_id" jdbcType="INTEGER" property="logId" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="module_name" jdbcType="VARCHAR" property="moduleName" />
+    <result column="action_name" jdbcType="VARCHAR" property="actionName" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="param_name" jdbcType="VARCHAR" property="paramName" />
+    <result column="action_id" jdbcType="INTEGER" property="actionId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from crm_action_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.inyu.entity.CrmActionLog">
+    insert into crm_action_log (log_id, `operator`, module_name, 
+      action_name, content, param_name, 
+      action_id, create_time, ip
+      )
+    values (#{logId,jdbcType=INTEGER}, #{operator,jdbcType=VARCHAR}, #{moduleName,jdbcType=VARCHAR}, 
+      #{actionName,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{paramName,jdbcType=VARCHAR}, 
+      #{actionId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{ip,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.inyu.entity.CrmActionLog">
+    update crm_action_log
+    set `operator` = #{operator,jdbcType=VARCHAR},
+      module_name = #{moduleName,jdbcType=VARCHAR},
+      action_name = #{actionName,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      param_name = #{paramName,jdbcType=VARCHAR},
+      action_id = #{actionId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      ip = #{ip,jdbcType=VARCHAR}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select log_id, `operator`, module_name, action_name, content, param_name, action_id, 
+    create_time, ip
+    from crm_action_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select log_id, `operator`, module_name, action_name, content, param_name, action_id, 
+    create_time, ip
+    from crm_action_log
+  </select>
+</mapper>
