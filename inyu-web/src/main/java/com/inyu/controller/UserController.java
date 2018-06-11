@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -66,10 +67,10 @@ public class UserController extends AbstractController {
 
             @Override
             public void check() {
-                boolean captcha = asyncSysCaptchaService.validate("","");
-                if(!captcha){
+//                boolean captcha = asyncSysCaptchaService.validate("","");
+                if(StringUtils.isBlank(username)||StringUtils.isBlank(password)){
                     logger.error("登陆失败！");
-                   throw new InyuException(ExceptionEnum.INVALID_PARAM.getIndex(),"验证码有误");
+                   throw new InyuException(ExceptionEnum.INVALID_PARAM.getIndex(),"用户名或密码为空!");
                 }
             }
 

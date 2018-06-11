@@ -129,6 +129,6 @@ public class AsyncUserServiceImpl  implements AsyncUserService {
 
     @Override
     public CrmUser getUserInfoByName(String username) {
-        return crmUserMapper.selectByName();
+        return crmUserMapper.selectByName(username);
     }
 }
