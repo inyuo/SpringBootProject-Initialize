@@ -13,6 +13,8 @@ public interface AsyncQuartzProxyService {
 
     List<QuartzProxy> getProxyList();
 
+    List<QuartzProxy> selectProxyListByStatus(Integer status);
+
     QuartzProxy findById(long id);
 
     QuartzProxy findByIp(String ip);

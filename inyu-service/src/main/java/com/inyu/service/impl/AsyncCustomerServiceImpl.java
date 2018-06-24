@@ -1,7 +1,5 @@
 package com.inyu.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.inyu.common.DateUtil;
 import com.inyu.common.PageBean;
 import com.inyu.dal.master.CrmCustomerMapper;
@@ -14,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户接口
@@ -31,12 +32,23 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
     CrmCustomerMapper crmCustomerMapper;
 
     @Override
-    public PageBean<CrmCustomer> getCustomerList(String queryObj, Integer currentPage, Integer pageSize) {
+    public PageBean<CrmCustomer> getCustomerList(String name, Integer currentPage, Integer pageSize) {
+        Map params = new HashMap<>();
+        params.put("name", name);
+        int totalCounnt = crmCustomerMapper.countSelectCustomerByPage(params);
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
-        PageHelper.startPage(currentPage, pageSize);
-        Page<CrmCustomer> crmCustomers = crmCustomerMapper.selectAll();
-        int totalCounnt = crmCustomers.size();            //总记录数
-        PageBean<CrmCustomer> pageData = new PageBean<>(currentPage, pageSize, totalCounnt,Boolean.TRUE );
+        //分页插件
+//        PageHelper.startPage(currentPage, pageSize);
+
+        int offset = pageSize * (currentPage - 1);
+
+        if (pageSize==0){
+            pageSize=20;
+        }
+        params.put("index", offset);
+        params.put("pageSize", pageSize);
+        List<CrmCustomer> crmCustomers = crmCustomerMapper.selectCustomerByPage(params);
+        PageBean<CrmCustomer> pageData = new PageBean<>(currentPage, pageSize, totalCounnt, Boolean.TRUE);
         pageData.setItemList(crmCustomers);
         return pageData;
     }
@@ -47,8 +59,10 @@ public class AsyncCustomerServiceImpl implements AsyncCustomerService {
     }
 
     @Override
-    public CrmCustomer getCustomerInfoByIndustry(String industry) {
-        return crmCustomerMapper.queryCustomerInfoByIndustry(industry);
+    public List<CrmCustomer> getCustomerInfoByIndustry(String industry) {
+        HashMap<Object, Object> params = new HashMap<>();
+        params.put("industry",industry);
+        return crmCustomerMapper.queryCustomerInfoByIndustry(params);
     }
 
     @Override

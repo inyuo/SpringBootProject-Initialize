@@ -1,14 +1,10 @@
 package com.inyu.quartz;
 
+import com.alibaba.fastjson.JSONObject;
 import com.inyu.common.DateUtil;
-import com.inyu.service.utils.MyHttpUtils;
 import com.inyu.entity.QuartzProxy;
 import com.inyu.service.AsyncQuartzProxyService;
-import org.apache.commons.lang.StringUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import com.inyu.service.utils.MyHttpUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -18,12 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 定时任务实现类
+ * @author jingu
  * Created by jinyu on 2018/4/12/012.
  */
 @Configuration
@@ -31,72 +33,129 @@ import java.util.HashMap;
 @EnableScheduling
 public class ScheduleTask1 implements Job, Serializable {
 
+    private static Logger logger = LoggerFactory.getLogger(ScheduleTask1.class);
+    /**
+     * 队列 存储待验证的代理池
+     */
+    Queue<QuartzProxy> proxyQuene = new LinkedBlockingQueue();
     @Autowired
     private AsyncQuartzProxyService asyncQuartzProxyService;
-    private static Logger logger = LoggerFactory.getLogger(ScheduleTask1.class);
-    private static int num = 1;
 
-    public void proxyJob() {
+    // 在运行态
+    private static boolean lockeD = false;
+    String baidu = "https://www.baidu.com/";
+
+    /**
+     * 获取代理
+     * @throws JobExecutionException
+     */
+    public void moguProxyJob() throws JobExecutionException {
+        logger.info("==== 定时任务实现类（代理获取）ScheduleTask ====> 开启!" + DateUtil.getTime());
         try {
+            //处理中
+            if (lockeD){
+                return;
+            }
+            lockeD =true;
             //访问地址
-            String kuaiProxy = "https://www.kuaidaili.com/free/inha/" + num + "/";
+            String kuaiProxy = "http://www.mogumiao.com/proxy/free/listFreeIp";
             HashMap<String, String> headers = new HashMap<>();
-            headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-            headers.put("Accept-Encoding", "gzip, deflate, br");
+            headers.put("Accept", "application/json, text/plain, */*");
+            headers.put("Accept-Encoding", "gzip, deflate, sdch");
             headers.put("Accept-Language", "zh-CN,zh;q=0.9");
             headers.put("Connection", "keep-alive");
-            headers.put("Host", "www.kuaidaili.com");
-            headers.put("Referer", "https://www.kuaidaili.com/free/");
-            headers.put("Cookie", "mediav=%7B%22eid%22%3A%22260320%22%2C%22ep%22%3A%22%22%2C%22vid%22%3A%22fPa%3AZ%23iXLk%3AoZ2%3C0Wm3%3A%22%2C%22ctn%22%3A%22%22%7D;"
-                    + " mediav=%7B%22eid%22%3A%22260320%22%2C%22ep%22%3A%22%22%2C%22vid%22%3A%22fPa%3AZ%23iXLk%3AoZ2%3C0Wm3%3A%22%2C%22ctn%22%3A%22%22%7D; "
-                    + "channelid=0; sid=1526290266591573; _ga=GA1.2.811598351.1526290267; _gid=GA1.2.101351125.1526290267; Qs_lvt_161068=1526290267%2C1526291088; "
-                    + "Hm_lvt_7ed65b1cc4b810e9fd37959c9bb51b31=1526290267,1526291089; _gat=1; mediav=%7B%22eid%22%3A%22260320%22%2C%22ep%22%3A%22%22%2C%22vid%22%3A%22fPa%3AZ%23iXLk%3AoZ2%3C0Wm3%3A%22%2C%22ctn%22%3A%22%22%7D; "
-                    + "Qs_pv_161068=4091851921230243000%2C4203865782801775600%2C2477124948762491000%2C2922827072946573300%2C4238660453164286500; Hm_lpvt_7ed65b1cc4b810e9fd37959c9bb51b31=1526291500");
-            headers.put("Upgrade-Insecure-Requests", "1");
+            headers.put("Host", "www.mogumiao.com");
+            headers.put("Referer", "http://www.mogumiao.com/web");
+            headers.put("Cookie", "JSESSIONID=49F58A0B91865C7F9E44F2D41310A5A2; UM_distinctid=16430cee0f7a9-068ea502d88819-6b1b1279-1fa400-16430cee0f8790; CNZZDATA1271466141=1890848463-1529824475-null%7C1529824475");
+            headers.put("X-Requested-With", "XMLHttpRequest");
             headers.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36");
 
             //获取页面
-            String proxyPage = MyHttpUtils.sendGet(kuaiProxy, headers,null);
-            Document parse = Jsoup.parse(proxyPage);
-            Elements elements = parse.getElementsByClass("table table-bordered table-striped").select("tr");
-            QuartzProxy proxy = null;
-            for (int i = 1; i < elements.size(); i++) {
-                proxy = new QuartzProxy();
-                Element element = elements.get(i);
-                Elements selects = element.select("td");
-                String ip = selects.get(0).ownText();
-                if (StringUtils.isEmpty(ip)) {
-                    logger.warn("ip is null element:" + element);
-                    continue;
-                }
-                proxy.setIp(selects.get(0).ownText());
-                proxy.setPort(selects.get(1).ownText());
-                proxy.setType(selects.get(3).ownText());
-                proxy.setLocation(selects.get(4).ownText());
-                String time = selects.get(5).ownText().replace("秒", "");
-                proxy.setSpread(Float.parseFloat(time));
-                proxy.setStatus(0);//默认可用
-                proxy.setLastValidate(DateUtil.getSqlDateShort());
-                //该记录已存在 & 更新
+            String proxyPage = MyHttpUtils.sendGet(kuaiProxy, headers, null);
+            Mogu mogu = JSONObject.parseObject(proxyPage, Mogu.class);
+
+
+            QuartzProxy proxy= new QuartzProxy();
+            for (Map<String, String> jsonObject : mogu.getMsg()) {
+                proxy.setIp(jsonObject.get("ip"));
+                proxy.setPort(jsonObject.get("port"));
                 asyncQuartzProxyService.saveProxy(proxy);
             }
-
+            lockeD = false;
         } catch (Exception e) {
             logger.error(e.getMessage());
         } finally {
-            num++;
+            lockeD =false;
+            executeJob();
         }
     }
 
+    /**
+     * 验证代理
+     * @throws JobExecutionException
+     */
+    public void executeJob() throws JobExecutionException {
+        logger.info("==== 定时任务实现类（代理验证）ScheduleTask ====> 开启!" + DateUtil.getTime());
+        try {
+            if (!CollectionUtils.isEmpty(proxyQuene)){
+                logger.info("==== 定时任务====> 进行中，队列剩余：" + proxyQuene.size()+"，当前时间："+DateUtil.getTime());
+                return;
+            }
+            List<QuartzProxy> proxyList = asyncQuartzProxyService.getProxyList();
+            proxyQuene.addAll(proxyList);
+            for (QuartzProxy QuartzProxy : proxyQuene) {
+                QuartzProxy.setLastValidate(DateUtil.getSqlDateShort());
+                //获取页面
+                String proxyPage = MyHttpUtils.sendGet(baidu, null,QuartzProxy);
+                if (proxyPage==null||proxyPage.indexOf("百度一下，你就知道")!=-1){
+                    QuartzProxy.setStatus(1);
+                }else {
+                    QuartzProxy.setStatus(0);
+                }
+                asyncQuartzProxyService.updateProxy(QuartzProxy);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+    }
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        logger.info("====== 定时任务实现类（获取&验证代理ip池）ScheduleTask ====> 开启!" + DateUtil.getNowDate());
+        logger.info("====== 定时任务实现类（获取&验证代理ip池）ScheduleTask ====> 开启!" + DateUtil.getStringToday());
         try {
-            proxyJob();
+            moguProxyJob();
         } catch (Exception e) {
             logger.error("==== 定时任务实现类（获取&验证代理ip池）ScheduleTask ====>异常!", e.getMessage());
         } finally {
-            logger.info("==== 定时任务实现类（获取&验证代理ip池）ScheduleTask ====> 结束!" + DateUtil.getNowDate());
+            logger.info("==== 定时任务实现类（获取&验证代理ip池）ScheduleTask ====> 结束!" + DateUtil.getStringToday());
         }
+    }
+}
+
+class Mogu {
+    private String code;
+    private List<Map<String, String>> msg;
+
+    public Mogu(String code, List<Map<String, String>> msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public Mogu() {
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public List<Map<String, String>> getMsg() {
+        return msg;
+    }
+
+    public void setMsg(List<Map<String, String>> msg) {
+        this.msg = msg;
     }
 }

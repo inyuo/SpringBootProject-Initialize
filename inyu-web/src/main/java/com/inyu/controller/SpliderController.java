@@ -2,6 +2,7 @@ package com.inyu.controller;
 
 
 import com.inyu.common.BasicResult;
+import com.inyu.service.AsyncCustomerService;
 import com.inyu.service.AsyncSpliderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,8 +28,8 @@ public class SpliderController extends AbstractController {
 
     @Autowired
     private AsyncSpliderService asyncSpliderService;
-//    @Autowired
-//    private AsyncCustomerService asyncCustomerService;
+    @Autowired
+    private AsyncCustomerService asyncCustomerService;
     private static int counter = 20;
 
     @ApiOperation("开启")

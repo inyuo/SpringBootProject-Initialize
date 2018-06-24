@@ -60,7 +60,10 @@ public class SchedulerController extends AbstractController  {
                                @ApiParam("CRON：cron") @RequestParam(value = "cron", required = true) String cron,
                                @ApiParam("信息：msg") @RequestParam(value = "msg", required = true) String msg) {
         try {
-            return BasicResult.isOk().data(asyncQuartzConfService.updateJob(id, cron, msg));
+            int i = asyncQuartzConfService.updateJob(id, cron, msg);
+            logger.info("更新任务！");
+            return BasicResult.isOk().data(i);
+
         } catch (Exception e) {
             logger.error("更新任务失败！", e);
             return BasicResult.isFail(e);
@@ -77,6 +80,7 @@ public class SchedulerController extends AbstractController  {
                 try {
                     mySchedulerFactory.pauseJob(id);
                     asyncQuartzConfService.updateJobStatus(id,PAUSE_CODE);
+                    logger.info("暂停任务！");
                 } catch (Exception e) {
                     logger.error("暂停任务失败！", e);
                     transactionStatus.setRollbackOnly();
@@ -95,10 +99,11 @@ public class SchedulerController extends AbstractController  {
             @Override
             public BasicResult doInTransaction(TransactionStatus transactionStatus) {
                 try {
-                    mySchedulerFactory.resumeJob(id);
                     asyncQuartzConfService.updateJobStatus(id,ACTIVE_CODE);
+                    mySchedulerFactory.resumeJob(id);
+                    logger.info("恢复任务！");
                 } catch (Exception e) {
-                    logger.error("暂停任务失败！", e);
+                    logger.error("恢复任务失败！", e);
                     transactionStatus.setRollbackOnly();
                     return BasicResult.isFail(e);
                 }

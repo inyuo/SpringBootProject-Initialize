@@ -5,7 +5,6 @@ import com.inyu.common.PageBean;
 import com.inyu.entity.CrmUser;
 import com.inyu.entity.enu.ExceptionEnum;
 import com.inyu.entity.exception.InyuException;
-import com.inyu.service.AsyncSysCaptchaService;
 import com.inyu.service.AsyncUserService;
 import com.inyu.service.ServiceCallback;
 import com.inyu.service.ServiceTemplate;
@@ -15,21 +14,17 @@ import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
@@ -49,8 +44,6 @@ public class UserController extends AbstractController {
     AsyncUserService asyncUserService;
     @Autowired
     ServiceTemplate serviceTemplate;
-    @Autowired
-    AsyncSysCaptchaService asyncSysCaptchaService;
 
     @ApiOperation("登录")
     @PostMapping(value = "login")
@@ -116,15 +109,12 @@ public class UserController extends AbstractController {
     @ApiOperation("获取验证码")
     @GetMapping("captcha.jpg")
     public void captcha(HttpServletResponse response,@ApiParam("uuid：uuid")@RequestParam(value = "uuid",required = true) String uuid)throws ServletException, IOException {
-        response.setHeader("Cache-Control", "no-store, no-cache");
+        /*response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
 
-        //获取图片验证码
-        BufferedImage image = asyncSysCaptchaService.getCaptcha(uuid);
 
         ServletOutputStream out = response.getOutputStream();
-        ImageIO.write(image, "jpg", out);
-        IOUtils.closeQuietly(out);
+        IOUtils.closeQuietly(out);*/
     }
 
     @ApiOperation("获取当前用户")

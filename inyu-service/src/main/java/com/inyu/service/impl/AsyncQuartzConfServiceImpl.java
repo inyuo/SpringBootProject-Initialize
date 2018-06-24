@@ -1,8 +1,8 @@
 package com.inyu.service.impl;
 
+import com.inyu.dal.master.QuartzConfigMapper;
 import com.inyu.entity.QuartzConfig;
 import com.inyu.service.AsyncQuartzConfService;
-import com.inyu.dal.master.QuartzConfigMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +39,16 @@ public class AsyncQuartzConfServiceImpl implements AsyncQuartzConfService{
 
     @Override
     public int updateJob(long id, String cron, String msg) {
-        return quartzConfigMapper.updateMsgByPK(id,cron,msg);
+        QuartzConfig quartzConfig = quartzConfigMapper.selectByPrimaryKey(id);
+        quartzConfig.setCron(cron);
+        quartzConfig.setMsg(msg);
+        return quartzConfigMapper.updateByPrimaryKey(quartzConfig);
     }
 
     @Override
     public int updateJobStatus(long id, int status) {
-        return quartzConfigMapper.updateStatusByPK(id,status);
+        QuartzConfig quartzConfig = quartzConfigMapper.selectByPrimaryKey(id);
+        quartzConfig.setStatus(status);
+        return quartzConfigMapper.updateByPrimaryKey(quartzConfig);
     }
 }

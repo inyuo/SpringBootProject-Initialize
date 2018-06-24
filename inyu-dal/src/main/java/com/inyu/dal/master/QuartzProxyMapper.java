@@ -4,6 +4,7 @@ import com.inyu.entity.QuartzProxy;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface QuartzProxyMapper {
@@ -47,5 +48,7 @@ public interface QuartzProxyMapper {
      */
     int updateByPrimaryKey(QuartzProxy record);
 
-    QuartzProxy queryProxyByIp(String ip);
+    QuartzProxy queryProxyByIp(Map map);
+
+    List<QuartzProxy> selectProxyListByStatus(Map map);
 }

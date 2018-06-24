@@ -96,7 +96,7 @@ public class ActionLogAspect {
         try {
             username = ((CrmUser) SecurityUtils.getSubject().getPrincipal()).getName();
         }catch (Exception e){
-            logger.error("获取用户失败",e);
+            logger.error("获取用户失败");
         }
         actionLog.setOperator(username);
 
