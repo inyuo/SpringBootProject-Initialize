@@ -71,15 +71,15 @@ public class UserController extends AbstractController {
             public BasicResult executeService() {
                 //用户信息
                 CrmUser user = asyncUserService.getUserInfoByName(username);
-
-                CrmUser userInfo = asyncUserService.login(user);
-                if (userInfo!=null) {
+                String salt = user.getSalt();
+                String hexPwd = new Sha256Hash(password, salt).toHex();
+                if (StringUtils.equalsIgnoreCase(hexPwd,user.getPassword())) {
                     HttpSession session = request.getSession();
-                    session.setAttribute("userInfo", userInfo);
-                    Cookie uidCookie = new Cookie("uid", userInfo.getUserId() + "");
+                    session.setAttribute("userInfo", user);
+                    Cookie uidCookie = new Cookie("uid", user.getUserId() + "");
                     uidCookie.setMaxAge(60 * 60 * 24);
                     response.addCookie(uidCookie);
-                    return BasicResult.isOk().data(userInfo);
+                    return BasicResult.isOk().data(user);
                 }else {
                     return BasicResult.isFail().msg("登录失败");
                 }

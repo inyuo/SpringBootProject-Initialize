@@ -5,7 +5,6 @@ import com.inyu.entity.QuartzProxy;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -34,6 +33,8 @@ public class MyHttpUtils {
     public static CloseableHttpClient httpClient = HttpClients.createDefault();
     public static HttpClientContext context = new HttpClientContext();
     private static Logger logger = LoggerFactory.getLogger(MyHttpUtils.class);
+
+
 
     private MyHttpUtils() {
 
@@ -69,6 +70,7 @@ public class MyHttpUtils {
             } catch (Exception e) {
                 return "EXP";
             }
+
         return content;
     }
 
@@ -108,31 +110,7 @@ public class MyHttpUtils {
         return bs;
     }
 
-    public static void checkProxyIp(String ip,String port) {
 
-            String testUrl="http://www.baidu.com";
-            int statusCode = 0;
-            try {
-                HttpHost proxy = new HttpHost("115.218.120.184", 8080, "http");
-                RequestConfig config = RequestConfig.custom()
-                        .setProxy(proxy)
-                        // 读取数据超时时间（默认30秒 30000ms） 单位毫秒（ms）
-                        .setSocketTimeout(30000)
-                        // 连接超时时间（默认10秒 10000ms） 单位毫秒（ms）
-                        .setConnectTimeout(10000)
-                        .build();
-                HttpGet get = new HttpGet(testUrl);
-                get.setConfig(config);
-
-                CloseableHttpResponse response = httpClient.execute(get, context);
-
-            } catch (Exception e) {
-                System.out.println("ip " + testUrl + " is not aviable");
-            }
-            if(statusCode>0){
-                System.out.format("%s:%s-->%sn", ip, port,statusCode);
-            }
-    }
 
     /**
      * 构造header

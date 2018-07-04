@@ -1,8 +1,10 @@
 package com.inyu.quartz;
 
 import com.inyu.common.DateUtil;
+import com.inyu.entity.CrmActionLog;
 import com.inyu.entity.CrmConfig;
 import com.inyu.entity.CrmCustomer;
+import com.inyu.service.AsyncCrmActionLogService;
 import com.inyu.service.AsyncCrmConfService;
 import com.inyu.service.AsyncCustomerService;
 import com.inyu.service.AsyncQuartzProxyService;
@@ -41,15 +43,17 @@ public class ScheduleTask2 implements Job {
     private AsyncCrmConfService asyncCrmConfService;
     @Autowired
     private AsyncCustomerService asyncCustomerService;
+    @Autowired
+    private  AsyncCrmActionLogService asyncCrmActionLogService;
 
     // 可用的代理状态
     private static final int EFFECT_PROXY_STAT = 0;
     // 失败计数
     private static int failCount = 0;
 
-    public void executeJob() throws JobExecutionException {
+    public void executeJob() {
 
-        logger.info("==== 定时任务实现类（XX节活动专场提醒）ScheduleTask ====> 开启!" + DateUtil.getStringToday());
+        logger.info("==== 定时任务实现类（获取黄页客户）ScheduleTask ====> 开启!" + DateUtil.getStringToday());
         CrmConfig crmConf = null;
         int spliderCounter = 0;
         try {
@@ -72,11 +76,20 @@ public class ScheduleTask2 implements Job {
 
             if (getRet.contains("没找到")) {
                 logger.error("splider-save-customer ==> 没找到 ");
-                failCount++;
+                ++failCount;
+                ++spliderCounter;
+                Thread.sleep(5999);
+                return;
+            }
+            if (getRet.contains("采集大神")) {
+                logger.error("splider-save-customer ==> 采集限制 ");
+                Thread.sleep(9999);
                 return;
             }
             //失败清零
             failCount = 0;
+            // 迭代计数
+            ++spliderCounter;
             Document parse = Jsoup.parse(getRet);
             //公司联系方式
             Elements dtels = parse.getElementsByClass("codl").first().select("dt");
@@ -115,17 +128,41 @@ public class ScheduleTask2 implements Job {
             List<CrmCustomer> infoByName = asyncCustomerService.getCustomerInfoByIndustry(customer.getIndustry());
             if (!CollectionUtils.isEmpty(infoByName)) {
                 logger.error("splider-save-customer ==> 已存在: " + infoByName.size());
+
                 return;
             }
             // 存储用户
             asyncCustomerService.addCustomer(customer);
+            // 保存用户操作日志
+
+            saveActionLog(getRet,baseUrl);
+
         } catch (Exception e) {
             logger.error("splider-save-customer--> 异常:", e);
         } finally {
-            crmConf.setValue(++spliderCounter + "");
+            crmConf.setValue(spliderCounter + "");
             asyncCrmConfService.updateCrmConf(crmConf);
             logger.info("splidert-hread-->  " + Thread.currentThread().getName() + "<--");
         }
+    }
+
+    /**
+     * 存储日志
+     * @param getRet
+     * @param baseUrl
+     */
+    public void saveActionLog(String getRet,String baseUrl) {
+        CrmActionLog actionLog = new CrmActionLog();
+        actionLog.setModuleName("com.inyu.service.utils.MyHttpUtils");
+        actionLog.setIp("localhost");
+        actionLog.setParamName(baseUrl);
+        actionLog.setActionName("get PageContent");
+        actionLog.setOperator("Default");
+        actionLog.setCreateTime(DateUtil.getNow());
+        actionLog.setContent(getRet);
+        actionLog.setActionId(2);
+        actionLog.setActionId(2);
+        asyncCrmActionLogService.saveActionLog(actionLog);
     }
 
     @Override

@@ -197,7 +197,7 @@ public  class DateUtil {
     /**
      * 得到现在时间
      *
-     * @return 字符串 yyyyMMdd HHmmss
+     * @return 字符串 yyyy-MM-dd HH:mm:ss
      */
     public static String getStringToday() {
         Date currentTime = new Date();

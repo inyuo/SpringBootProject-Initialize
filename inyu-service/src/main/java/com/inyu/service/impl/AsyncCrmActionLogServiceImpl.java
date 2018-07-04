@@ -3,6 +3,7 @@ package com.inyu.service.impl;
 import com.inyu.dal.master.CrmActionLogMapper;
 import com.inyu.entity.CrmActionLog;
 import com.inyu.service.AsyncCrmActionLogService;
+import com.inyu.service.ServiceTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class AsyncCrmActionLogServiceImpl implements AsyncCrmActionLogService {
     private Logger logger= LoggerFactory.getLogger(AsyncCrmActionLogServiceImpl.class);
 
     private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    ServiceTemplate serviceTemplate;
 
     @Autowired
     CrmActionLogMapper crmActionLogMapper;

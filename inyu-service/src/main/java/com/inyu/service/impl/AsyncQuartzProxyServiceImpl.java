@@ -56,6 +56,8 @@ public class AsyncQuartzProxyServiceImpl implements AsyncQuartzProxyService {
     public int saveProxy(QuartzProxy proxy) {
         Map params = new HashMap();
         params.put("ip",proxy.getIp());
+
+        // 查重
         QuartzProxy byIp = quartzProxyMapper.queryProxyByIp(params);
         if (byIp==null){
             initProxy(proxy);
@@ -63,6 +65,8 @@ public class AsyncQuartzProxyServiceImpl implements AsyncQuartzProxyService {
         }else {
             byIp.setLastValidate(DateUtil.getNowDate());
             byIp.setPort(proxy.getPort());
+            byIp.setSpread(proxy.getSpread());
+            byIp.setStatus(proxy.getStatus());
             return quartzProxyMapper.updateByPrimaryKey(proxy);
         }
     }
