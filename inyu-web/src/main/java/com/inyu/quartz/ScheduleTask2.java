@@ -138,7 +138,7 @@ public class ScheduleTask2 implements Job {
             saveActionLog(getRet,baseUrl);
 
         } catch (Exception e) {
-            logger.error("splider-save-customer--> 异常:", e);
+            logger.error("splider-save-customer--> 异常 spliderCounter:"+spliderCounter, e);
         } finally {
             crmConf.setValue(spliderCounter + "");
             asyncCrmConfService.updateCrmConf(crmConf);
