@@ -134,7 +134,6 @@ public class ScheduleTask2 implements Job {
             // 存储用户
             asyncCustomerService.addCustomer(customer);
             // 保存用户操作日志
-
             saveActionLog(getRet,baseUrl);
 
         } catch (Exception e) {

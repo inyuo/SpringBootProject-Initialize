@@ -17,7 +17,7 @@
     where log_id = #{logId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.inyu.entity.CrmActionLog">
-    insert into crm_action_log (log_id, `operator`, module_name, 
+    insert ignore into crm_action_log (log_id, `operator`, module_name,
       action_name, content, param_name, 
       action_id, create_time, ip
       )

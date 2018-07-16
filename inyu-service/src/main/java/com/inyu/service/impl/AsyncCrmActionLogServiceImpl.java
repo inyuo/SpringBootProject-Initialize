@@ -44,7 +44,6 @@ public class AsyncCrmActionLogServiceImpl implements AsyncCrmActionLogService {
         return crmActionLogMapper.selectByPrimaryKey(id);
     }
 
-    @Transactional
     @Override
     public int saveActionLog(CrmActionLog actionLog) {
         return crmActionLogMapper.insert(actionLog);
